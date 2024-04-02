@@ -1,0 +1,49 @@
+.h-wrapper {
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.h-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center items vertically */
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.h-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.h-menu > *:hover {
+  cursor: pointer;
+  color: aqua;
+}
+
+.fixed-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.scrolled {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
