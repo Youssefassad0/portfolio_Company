@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import "./Value.css";
-import { useState  } from "react";
+import { useState } from "react";
 import {
     Accordion,
     AccordionItem,
