@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { BiMenuAltRight } from 'react-icons/bi'
 import './Header.css';
 import OutsideClickHandler from 'react-outside-click-handler';
-import Contact from '../Contact/Contact';
+// import Contact from '../Contact/Contact';
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

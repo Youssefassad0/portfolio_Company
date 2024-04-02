@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
+import  { useState, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 import "./Value.css";
-import { useState } from "react";
 import {
     Accordion,
     AccordionItem,
@@ -10,21 +10,43 @@ import {
     AccordionItemPanel,
     AccordionItemState,
 } from "react-accessible-accordion";
-import {
-    MdOutlineArrowDropDown,
-    MdOutlineArrowDropDownCircle,
-} from "react-icons/md";
+import { MdOutlineArrowDropDown } from "react-icons/md";
+import { motion, useAnimation } from 'framer-motion';
 import data from "../../utils/accordion.jsx";
 import "react-accessible-accordion/dist/fancy-example.css";
+
 function Value() {
+    const controls = useAnimation();
+    const [ref, inView] = useInView();
+    const [animationPlayed, setAnimationPlayed] = useState(false);
+
+    useEffect(() => {
+        if (inView && !animationPlayed) {
+            controls.start({
+                opacity: 1,
+                x: 0,
+                transition: { duration: 4, type: "spring" }
+            });
+            setAnimationPlayed(true);
+        }
+    }, [controls, inView, animationPlayed]);
+
     return (
         <section id="value" className="v-wrapper">
             <div className="paddings innerWidth flexCenter v-container">
                 {/* left side */}
                 <div className="v-left">
-                    <div className="image-container">
+                    <motion.div
+                        ref={ref}
+                        initial={{
+                            opacity: 0,
+                            x: "-30rem"
+                        }}
+                        animate={controls}
+                        className="image-container"
+                    >
                         <img src="images/value.png" alt="" />
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* right */}
@@ -45,23 +67,14 @@ function Value() {
                         preExpanded={[0]}
                     >
                         {data.map((item, i) => {
-                            const [className, setClassName] = useState(null);
                             return (
                                 <AccordionItem
-                                    className={`accordionItem ${className}`}
+                                    className="accordionItem"
                                     uuid={i}
                                     key={i}
                                 >
                                     <AccordionItemHeading>
-                                        <AccordionItemButton className="flexCenter accordionButton ">
-                                            {/* just for getting state of item */}
-                                            <AccordionItemState>
-                                                {({ expanded }) =>
-                                                    expanded
-                                                        ? setClassName("expanded")
-                                                        : setClassName("collapsed")
-                                                }
-                                            </AccordionItemState>
+                                        <AccordionItemButton className="flexCenter accordionButton">
                                             <div className="flexCenter icon">{item.icon}</div>
                                             <span className="primaryText">{item.heading}</span>
                                             <div className="flexCenter icon">
