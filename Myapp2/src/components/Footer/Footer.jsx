@@ -64,10 +64,10 @@ const Footer = () => {
                   <span></span>
                 </div>
               </h3>
-              <form action="">
+              <form className="form" action="">
                 <FaEnvelope className="far" />
-                <input type="email" placeholder="Enter You email address" />
-                <button type="submit">
+                <input type="email" className="input" placeholder="Enter You email address" />
+                <button type="submit" className="button" >
                   <FaArrowRight className="fas" />
                 </button>
               </form>
