@@ -1,8 +1,9 @@
+/* Style pour le pied de page */
+
 footer {
     width: 100%;
     position: relative;
     padding-top: 300px;
-
     background: linear-gradient(to right, #00093c, #2d0b00);
     color: #fff;
     padding: 100px 0 30px;
@@ -12,7 +13,6 @@ footer {
 }
 
 .row {
-    /* width: 85%; */
     margin: auto;
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +25,7 @@ footer {
     padding: 10px;
 }
 
-.col:nth-child(2) , .col:nth-child(3) {
+.col:nth-child(2), .col:nth-child(3) {
     flex-basis: 15%;
 }
 
@@ -33,7 +33,6 @@ footer {
     width: 120px;
     height: 80px;
     margin-bottom: 30px;
-
 }
 
 .col h3 {
@@ -56,7 +55,6 @@ ul li {
 ul li a {
     text-decoration: none;
     color: #fff;
-
 }
 
 form {
@@ -71,7 +69,6 @@ form {
 form .far {
     font-size: 18px;
     margin-right: 10px;
-
 }
 
 form input {
@@ -102,60 +99,105 @@ form button .fas {
     line-height: 40px;
     font-size: 20px;
     color: #fff;
-    /* background: #; */
     margin-right: 15px;
     cursor: pointer;
     background: transparent;
-}hr{
+}
+
+hr {
     width: 100%;
     border: 0;
     border-bottom: 1px solid #ccc;
-    margin:  20px auto;
+    margin: 20px auto;
 }
-.copyright{
-   text-align: center; 
+
+.copyright {
+    text-align: center;
 }
-.underline{
+
+.underline {
     width: 100%;
     height: 5px;
-    background:#767676 ;
+    background: #767676;
     border-radius: 3px;
     position: absolute;
     top: 25px;
     left: 0;
     overflow: hidden;
 }
-.underline span{
+
+.underline span {
     width: 15px;
     height: 100%;
-    background:#fff ;
+    background: #fff;
     border-radius: 3px;
     position: absolute;
     top: 0;
     left: 10px;
-    animation:  moving 2s linear infinite;
+    animation: moving 2s linear infinite;
 }
-@keyframes moving{
-    0%{
-        left:-20px ;
-        
+
+@keyframes moving {
+    0% {
+        left: -20px;
     }
-    100%{
+
+    100% {
         left: 100%;
     }
 }
 
+/* Style pour le pied de page responsive */
+
+/* Rendre le pied de page plus compact sur les petits écrans */
 @media (max-width: 768px) {
     footer {
-        bottom: unset;
+        padding-top: 200px;
+        padding-bottom: 50px;
     }
 
+    /* Réduire la taille du logo sur les petits écrans */
+    .logo {
+        width: 100px;
+        height: auto;
+    }
+
+    /* Réorganiser les colonnes sur les petits écrans */
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Ajuster la largeur des colonnes sur les petits écrans */
     .col {
-        flex-basis: 100%;
+        flex-basis: 90%;
+        text-align: center;
     }
 
-    .col:nth-child(2),
-    .col:nth-child(3) {
-        flex-basis: 100%;
+    /* Réduire la taille du texte sur les petits écrans */
+    .col p,
+    .col h3 {
+        font-size: 12px;
+    }
+
+    /* Réduire l'espace entre les éléments sur les petits écrans */
+    .col p,
+    .col h3,
+    ul li {
+        margin-bottom: 8px;
+    }
+
+    /* Réduire la taille des icônes de réseaux sociaux sur les petits écrans */
+    .social-icons .fab {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    /* Masquer l'animation de soulignement sur les petits écrans */
+    .underline {
+        display: none;
     }
 }

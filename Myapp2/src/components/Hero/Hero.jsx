@@ -1,6 +1,8 @@
 import CountUp from "react-countup";
 import "./Hero.css"; // Adjust the import path as needed
 import { HiLocationMarker } from "react-icons/hi";
+import { motion } from 'framer-motion'
+
 function Hero() {
   return (
     <section className="hero-wrapper">
@@ -10,10 +12,17 @@ function Hero() {
           <div className="hero-title">
             <div className="orange-circle" />
 
-            <h1>
+            <motion.h1
+              initial={{ y: "2rem", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 3,
+                type:"spring"
+              }}
+            >
               Discover <br />
               Quality Inox Solutions <br /> for Your Home
-            </h1>
+            </motion.h1>
           </div>
           <div className="flexColStart hero-des">
             <span className="secondaryText" >
@@ -27,34 +36,47 @@ function Hero() {
             <button className="button"> Search</button>{" "}
           </div>
           <div className="flexCenter stats">
-  <div className="flexColCenter stat">
-    <span>
-      <CountUp start={1000} end={2500} duration={4} /> <span>+</span>
-    </span>
-    <span className="secondaryText">Premium Product</span>
-  </div>
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp start={1000} end={2500} duration={4} /> <span>+</span>
+              </span>
+              <span className="secondaryText">Premium Product</span>
+            </div>
 
-  <div className="flexColCenter stat">
-    <span>
-      <CountUp start={10} end={212} duration={4} /> <span>+</span>
-    </span>
-    <span className="secondaryText">Happy Customer</span>
-  </div>
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp start={10} end={212} duration={4} /> <span>+</span>
+              </span>
+              <span className="secondaryText">Happy Customer</span>
+            </div>
 
-  <div className="flexColCenter stat">
-    <span>
-      <CountUp end={28} /> <span>+</span>
-    </span>
-    <span className="secondaryText">Years of experience</span>
-  </div>
-</div>
+            <div className="flexColCenter stat">
+              <span>
+                <CountUp end={28} /> <span>+</span>
+              </span>
+              <span className="secondaryText">Years of experience</span>
+            </div>
+          </div>
 
         </div>
         {/* Right Section  */}
         <div className="flexCenter hero-right">
-          <div className="image-container">
+          <motion.div
+          initial={{ 
+            x:"7rem",
+            opacity:0
+           }} animate={{ 
+            x:"0",
+            opacity:1
+           }}
+           transition={{ 
+            duration:3,
+            type:"spring"
+            }}
+
+           className="image-container">
             <img src="images/hero-image.png" alt="" />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
