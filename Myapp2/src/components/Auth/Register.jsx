@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link } from 'react-router-dom';
 import axios from 'axios';
 import './register.css';
 
@@ -43,6 +43,7 @@ function Register() {
         console.error('Request failed:', error.message);
       }
     }
+
   };
 
   return (
@@ -97,10 +98,12 @@ function Register() {
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
         />
-        {errors.image && <div className="text-danger">{errors.image}</div>}
+        {/* {errors.image && <div className="text-danger">{errors.image}</div>} */}
         
         <button className="btn" onClick={handleSubmit}>Signup</button>
-        <button className="btn">Sign In</button>
+        <Link to="/login">
+          <button className="btn">Login</button>
+        </Link>
       </form>
     </div>
   );

@@ -1,6 +1,8 @@
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import 'swiper/css'
 import './Projects.css'
+import '../../index.css'
+
 import data from '../../utils/slider.json'
 import { sliderSettings } from '../../utils/common'
 function Projects() {

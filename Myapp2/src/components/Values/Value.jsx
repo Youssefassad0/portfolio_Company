@@ -2,6 +2,8 @@
 import  { useState, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import "./Value.css";
+import '../../index.css'
+
 import {
     Accordion,
     AccordionItem,

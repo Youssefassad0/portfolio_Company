@@ -16,7 +16,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'name' => 'required|string',
             'password' => 'required|min:4',
-            'image' => 'nullable|mimes:png,jpg,jpeg,webp'
+            // 'image' => 'nullable|mimes:png,jpg,jpeg,webp'
         ]);
 
         if ($validator->fails()) {
@@ -34,11 +34,11 @@ class AuthController extends Controller
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('name'));
+        $user->password = Hash::make($request->input('password'));
         $user->image =  isset($fileName) ? $path . '/' . $fileName : null;
         $user->save();
 
-        return $user;
+        return response()->json(['user' => $user], 200);
     }
 
 
@@ -48,13 +48,17 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:4',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
         $user = User::where('email', $request->email)->first();
+
         if (!$user) {
             return response()->json(['error' => 'User not found.'], 404);
         }
+
         if (Hash::check($request->password, $user->password)) {
             return response()->json(['user' => $user], 200);
         } else {

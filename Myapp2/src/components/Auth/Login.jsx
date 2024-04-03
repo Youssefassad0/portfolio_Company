@@ -20,8 +20,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8001/api/login', { email, password });
-      localStorage.setItem('user-info', JSON.stringify(response.data)); // Save only response data
+      const response = await axios.post('http://127.0.0.1:8001/api/login', {email,password}, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });    
+        localStorage.setItem('user-info', JSON.stringify(response.data));    
+       console.log(response.data);
       navigate('/');
     } catch (error) {
       if (error.response) {
