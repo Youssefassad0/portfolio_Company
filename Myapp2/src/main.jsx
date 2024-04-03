@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Contact from "./components/ContactForm/contactUs";
+import Products from "./components/Products/Products";
+import Service from "./components/Services/Service";
 // import Hero from "./components/Hero/Hero";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -19,8 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </div>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/products" element={<App />} />
-        <Route path="/Services" element={<App />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/Services" element={<Service />} />
         {/* <Route path="/contact" element={<App />} /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

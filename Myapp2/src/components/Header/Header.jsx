@@ -10,16 +10,16 @@ import { Dropdown, Nav, NavDropdown } from "react-bootstrap";
 // import {FaA} from 'react-icons/fa'
 import './Header.css';
 import '../../index.css';
+
 import OutsideClickHandler from 'react-outside-click-handler';
 // import Contact from '../Contact/Contact';
 
 function Header() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user-info'));
-  // console.log(user.user.role);
+  // console.log(user.user.image);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuoption, setMenuOption] = useState(false);
-
   function Logout() {
     localStorage.clear();
     navigate('/');
@@ -59,21 +59,18 @@ function Header() {
             <Link to="/services">Services</Link>
             <Link to="/products">Products</Link>
             <Link to="/contact">Contact</Link>
-            {localStorage.getItem("user-info") ? (
+            {localStorage.getItem('user-info') ? (
               <Nav>
-                <img src={user.user.image} alt="" width={30} height={30}  />
-                {console.log(user.user.image)}
-                <NavDropdown title={user.user.name}>
-
-                  <Dropdown.Item className="text-danger">Profile</Dropdown.Item>
-                  {user.user.role === "admin" && (
-                    <Dropdown.Item  className="text-danger">DashBoard</Dropdown.Item>
+                <NavDropdown alignRight title={<img src={`http://localhost:8001/${user.user.image}`} alt='Profile' className='profile-image' onClick={() => setMenuOption(true)} />}>
+                  <Dropdown.Item>Your Profile</Dropdown.Item>
+                  {user.user.role === 'admin' && (
+                    <Dropdown.Item href='http://localhost:8001'>Dashboard</Dropdown.Item>
                   )}
-                  <Dropdown.Item onClick={Logout} className="text-danger">Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
                 </NavDropdown>
               </Nav>
             ) : (
-              <Link to="/login" className="button">Sign In</Link>
+              <Link to='/login' className='button'>Sign In</Link>
             )}
           </div>
           <div className="menu-icon" onClick={() => setMenuOption((prev) => !prev)}>

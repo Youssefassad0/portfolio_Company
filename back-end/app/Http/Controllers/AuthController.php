@@ -23,21 +23,29 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // Initialize image path variable
+        $imagePath = null;
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $path = 'uploads/users';
             $file->move($path, $fileName);
+
+            // Set image path
+            $imagePath = $path . '/' . $fileName;
         }
 
+        // Create new user instance
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->image =  isset($fileName) ? $path . '/' . $fileName : null;
+        $user->image = $imagePath; // Assign image path
         $user->save();
 
+        // Return user object with image path in the response
         return response()->json(['user' => $user], 200);
     }
 
