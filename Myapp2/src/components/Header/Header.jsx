@@ -64,7 +64,7 @@ function Header() {
                 <NavDropdown alignRight title={<img src={`http://localhost:8001/${user.user.image}`} alt='Profile' className='profile-image' onClick={() => setMenuOption(true)} />}>
                   <Dropdown.Item>Your Profile</Dropdown.Item>
                   {user.user.role === 'admin' && (
-                    <Dropdown.Item href='http://localhost:8001'>Dashboard</Dropdown.Item>
+                    <Dropdown.Item><Link to="/dashboard" >Dashboard</Link></Dropdown.Item>
                   )}
                   <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
                 </NavDropdown>

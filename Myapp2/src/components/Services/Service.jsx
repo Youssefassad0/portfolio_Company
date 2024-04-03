@@ -1,7 +1,12 @@
-
+import Header from "../Header/Header"
 function Service() {
     return (
-        <div>Service</div>
+        <>
+            <div className="App">
+                <Header />
+            </div>
+            <div>Service</div>
+        </>
     )
 }
 

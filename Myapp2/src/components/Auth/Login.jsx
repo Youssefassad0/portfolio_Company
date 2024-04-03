@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
+import Header from "../Header/Header";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -55,7 +56,11 @@ const Login = () => {
   };
 
   return (
-    <div className="body">
+    <>
+    <div className="App">
+      <Header />
+    </div>
+    <div className="bodyLogin">
       <div className="background">
         <div className="shape"></div>
         <div className="shape"></div>
@@ -85,7 +90,7 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        />
+          />
         {error.general && <div className="text-danger">{error.general}</div>}
         <button className="btn" onClick={handleLogin}>
           Log In
@@ -103,6 +108,7 @@ const Login = () => {
         </div>
       </form>
     </div>
+          </>
   );
 };
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate ,Link } from 'react-router-dom';
 import axios from 'axios';
 import './register.css';
-
+import Header from '../Header/Header';
 function Register() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -47,7 +47,10 @@ function Register() {
   };
 
   return (
-    <div className="body">
+    <div className="bodyLogin">
+       <div className="App">
+        <Header />
+      </div>
       <div className="background">
         <div className="shape"></div>
         <div className="shape"></div>
