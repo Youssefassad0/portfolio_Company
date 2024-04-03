@@ -16,17 +16,31 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'name' => 'required|string',
             'password' => 'required|min:4',
+            'image' => 'nullable|mimes:png,jpg,jpeg,webp'
         ]);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $user = User::create([
-            'name' => $request->input('name'),
-            "email" => $request->input('email'),
-            "password" => Hash::make($request->input('password'))
-        ]);
-        return response()->json(['user' => $user], 201);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $extension;
+            $path = 'uploads/users';
+            $file->move($path, $fileName);
+        }
+
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('name'));
+        $user->image =  isset($fileName) ? $path . '/' . $fileName : null;
+        $user->save();
+
+        return $user;
     }
+
 
     public function login(Request $request)
     {
