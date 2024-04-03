@@ -122,3 +122,6 @@ label{
 .social i{
   margin-right: 4px;
 }
+.text-danger{
+    color: #ff512f;
+}

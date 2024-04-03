@@ -13,6 +13,7 @@
 
 .h-menu {
   display: flex;
+z-index: 999;
   gap: 2rem;
 }
 
