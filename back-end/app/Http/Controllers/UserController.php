@@ -9,6 +9,9 @@ class UserController extends Controller
 {
     public function listUsers()
     {
-        return User::all();
+        $users = User::all();
+        return response()->json([
+            'users' => $users
+        ], 200);
     }
 }

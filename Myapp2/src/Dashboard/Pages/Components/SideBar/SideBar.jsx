@@ -22,17 +22,21 @@ function SideBar() {
                     <p className="title">
                         MAIN
                     </p>
-                    <li>
-                        <DashboardIcon id="icon" />
-                        <span>DashBoard</span>
-                    </li>
+                    <Link to="/dashboard" >
+                        <li>
+                            <DashboardIcon id="icon" />
+                            <span>DashBoard</span>
+                        </li>
+                    </Link>
                     <p className="sidebar-title">
                         Lists
                     </p>
-                    <li>
-                        <PersonIcon id="icon" />
-                        <span>Users</span>
-                    </li>
+                    <Link to="/dashboard/users" >
+                        <li>
+                            <PersonIcon id="icon" />
+                            <span> Users </span>
+                        </li>
+                    </Link>
                     <li>
                         <SiHomeassistantcommunitystore id="icon" />
                         <span>Products</span>
