@@ -1,17 +1,18 @@
 import "./List.scss"
-// import Sidebar from "../../components/sidebar/Sidebar"
-// import Navbar from "../../components/navbar/Navbar"
-// import Datatable from "../../components/datatable/Datatable"
+
+import SideBar from "../Components/SideBar/SideBar"
+import NavBar from "../Components/NavBar/NavBar";
+import Datatable from "../Components/DataTable/Datatable";
 
 const List = () => {
   return (
     <div className="list">
-      {/* <Sidebar/>
+      <SideBar/>
       <div className="listContainer">
-        <Navbar/>
-        <Datatable/>
-      </div> */}
-      List
+        <NavBar/>
+       <Datatable/>
+      </div>
+     
     </div>
   )
 }

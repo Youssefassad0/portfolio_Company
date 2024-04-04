@@ -1,12 +1,11 @@
+/* eslint-disable react/prop-types */
 import { FaSearch } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
+import ClearIcon from '@mui/icons-material/Clear';
+import { Link } from "react-router-dom";
 import './NavBar.scss'
-function NavBar() {
-  const user = JSON.parse(localStorage.getItem('user-info'));
-
-  console.log(user.user.image);
+function NavBar({ userInfo }) {
   return (
-
     <div className="d-navbar">
       <div className="d-wrapper">
         <div className="d-search">
@@ -18,19 +17,21 @@ function NavBar() {
             <MdDarkMode id="d-icon" />
           </div>
           <div className="d-item">
-            {
-              user && user.user.image ?
-                <img src={`http://localhost:8001/${user.user.image}`} alt="profil admin" className="d-avatar" /> :
-                <span >
-                  {
-                    user.user.name
-                  }
-                </span>
-            }
+            {userInfo && userInfo.user.image ? (
+              <img src={`http://localhost:8001/${userInfo.user.image}`} alt="profil admin" className="d-avatar" />
+            ) : (
+              <span>{userInfo ? userInfo.user.name : 'Guest'}</span>
+            )}
+          </div>
+          <div className="d-item">
+            <Link to="/" >
+              <ClearIcon />
+            </Link>
           </div>
         </div>
       </div>
-    </div>)
+    </div>
+  )
 }
 
 export default NavBar
