@@ -1,6 +1,11 @@
+import Header from '../Header/Header'
 import './contactUs.css'
 function Contact() {
   return (
+    <>
+    <div className="App">
+      <Header/>
+    </div>
     <div className="card">
     <p className="heading">Contact US Now </p>
     
@@ -17,6 +22,7 @@ function Contact() {
         <button className="submit">Submit</button>
       </div>
   </div>
+    </>
   )
 }
 

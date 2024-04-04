@@ -19,7 +19,8 @@ function Header() {
   const user = JSON.parse(localStorage.getItem('user-info'));
   // console.log(user.user.image);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [menuoption, setMenuOption] = useState(false);
+  const [menuOption, setMenuOption] = useState(false);
+
   function Logout() {
     localStorage.clear();
     navigate('/');
@@ -28,10 +29,12 @@ function Header() {
   const getMenuStyles = (menu) => {
     if (document.documentElement.clientWidth <= 800) {
       return {
-        right: !menu && '-100%'
-      }
+        right: menu ? '0' : '-100%'
+      };
+    } else {
+      return {};
     }
-  }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,17 +57,23 @@ function Header() {
           <img src="images/cristal-inox.png" width={130} alt="" />
         </Link>
         <OutsideClickHandler onOutsideClick={() => setMenuOption(false)}>
-          <div className={`flexCenter h-menu ${isScrolled ? 'fade-in' : ''}`} style={getMenuStyles(menuoption)}>
-            <Link to={'/'} >Home</Link>
+          <div className={`flexCenter h-menu ${isScrolled ? 'fade-in' : ''}`} style={getMenuStyles(menuOption)}>
+            <Link to={'/'}>Home</Link>
             <Link to="/services">Services</Link>
             <Link to="/products">Products</Link>
             <Link to="/contact">Contact</Link>
             {localStorage.getItem('user-info') ? (
               <Nav>
-                <NavDropdown alignRight title={<img src={`http://localhost:8001/${user.user.image}`} alt='Profile' className='profile-image' onClick={() => setMenuOption(true)} />}>
+                <NavDropdown alignRight title={
+                  user.user.image ? (
+                    <img src={`http://localhost:8001/${user.user.image}`} alt='Profile' className='profile-image' onClick={() => setMenuOption(true)} />
+                  ) : (
+                    <span>{user.user.name}</span>
+                  )
+                }>
                   <Dropdown.Item>Your Profile</Dropdown.Item>
                   {user.user.role === 'admin' && (
-                    <Dropdown.Item><Link to="/dashboard" >Dashboard</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
                   )}
                   <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
                 </NavDropdown>
@@ -73,7 +82,7 @@ function Header() {
               <Link to='/login' className='button'>Sign In</Link>
             )}
           </div>
-          <div className="menu-icon" onClick={() => setMenuOption((prev) => !prev)}>
+          <div className="menu-icon" onClick={() => setMenuOption(prev => !prev)}>
             <BiMenuAltRight size={30} />
           </div>
         </OutsideClickHandler>
