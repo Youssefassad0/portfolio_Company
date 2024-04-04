@@ -1,8 +1,8 @@
 import { FaSearch } from "react-icons/fa";
 import { MdDarkMode } from "react-icons/md";
 import './NavBar.scss'
-  function NavBar() {
-  const user= JSON.parse(localStorage.getItem('user-info'));
+function NavBar() {
+  const user = JSON.parse(localStorage.getItem('user-info'));
 
   console.log(user.user.image);
   return (
@@ -20,12 +20,12 @@ import './NavBar.scss'
           <div className="d-item">
             {
               user && user.user.image ?
-              <img src={`http://localhost:8001/${user.user.image}`} alt="profil admin"  className="d-avatar" /> : 
-              <span >
-                {
-                  user.user.name
-                }
-              </span>
+                <img src={`http://localhost:8001/${user.user.image}`} alt="profil admin" className="d-avatar" /> :
+                <span >
+                  {
+                    user.user.name
+                  }
+                </span>
             }
           </div>
         </div>

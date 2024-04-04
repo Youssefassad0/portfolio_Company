@@ -7,6 +7,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { IoSettingsSharp } from "react-icons/io5";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import { IoLogOut } from "react-icons/io5";
+import BadgeIcon from '@mui/icons-material/Badge';
 import { Link } from "react-router-dom";
 
 function SideBar() {
@@ -37,6 +38,9 @@ function SideBar() {
                         <span>Products</span>
                     </li>
                     <li>
+                        <BadgeIcon id="icon" />
+                        <span>Employees</span>
+                    </li> <li>
                         <LocalShippingIcon id="icon" />
                         <span>Delivery</span>
                     </li>
