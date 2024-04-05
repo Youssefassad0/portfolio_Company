@@ -18,7 +18,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
   <React.StrictMode>
     <BrowserRouter>
-
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/products" element={<Products />} />
@@ -29,9 +28,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/dashboard" >
           <Route index element={<Home />} />
           <Route path="users" >
-            <Route index element={<List userInfo={userInfo} />} />
-            <Route path=":userId" element={<Single />} />
-            <Route path="new" element={<New />} />
+            <Route index element={<List  />} />
+            <Route path=":userId" element={<Single  />} />
+            <Route path="new" element={<New  />} />
           </Route>
           <Route path="products" >
             <Route index element={<List />} />

@@ -1,14 +1,28 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import './Single.scss'
 import SideBar from '../Components/SideBar/SideBar'
 import NavBar from '../Components/NavBar/NavBar'
 import Chart from '../Components/chart/Chart'
 import Transaction from '../Components/Transaction/Transaction'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 function Single() {
+  const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem('user-info'));
+
+  useEffect(() => {
+    console.log(userInfo);
+    if (!userInfo || userInfo.user.role !== 'admin') {
+      navigate('/');
+
+    }
+  }, []);
   return (
     <div className="single">
       <SideBar />
       <div className="singleContainer">
-        <NavBar />
+        <NavBar userInfo={userInfo} />
         <div className="user-top">
           <div className="user-left">
             <div className="editButton">
@@ -44,11 +58,11 @@ function Single() {
             </div>
           </div>
           <div className="user-right">
-  <Chart aspect={3/1} title={"Last 6 Months (Revenue)"} />
+            <Chart aspect={3 / 1} title={"Last 6 Months (Revenue)"} />
           </div>
         </div>
         <div className="user-bottom">
-          <Transaction/>
+          <Transaction />
         </div>
       </div>
     </div>
