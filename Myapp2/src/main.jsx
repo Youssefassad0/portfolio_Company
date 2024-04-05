@@ -1,7 +1,8 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Products from './components/Products/Products'
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
@@ -12,12 +13,9 @@ import List from "./Dashboard/Pages/list/List";
 import Single from './Dashboard/Pages/single/Single'
 import New from "./Dashboard/Pages/new/New";
 
-
-
-
-
-
+const userInfo = JSON.parse(localStorage.getItem('user-info'));
 ReactDOM.createRoot(document.getElementById("root")).render(
+
   <React.StrictMode>
     <BrowserRouter>
 
@@ -31,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/dashboard" >
           <Route index element={<Home />} />
           <Route path="users" >
-            <Route index element={<List />} />
+            <Route index element={<List userInfo={userInfo} />} />
             <Route path=":userId" element={<Single />} />
             <Route path="new" element={<New />} />
           </Route>

@@ -1,7 +1,8 @@
-import './Datatable.scss'
-import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import "./Datatable.scss";
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Datatable = () => {
     const [users, setUsers] = useState([]);
@@ -9,12 +10,12 @@ const Datatable = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8001/api/users');
+            const response = await axios.get("http://127.0.0.1:8001/api/users");
             setUsers(response.data.users);
-            setTimeout(() => setLoading(false), 1000); // Set loading to false after 4 seconds
+            setTimeout(() => setLoading(false), 1000);
         } catch (error) {
             console.error("Error fetching users:", error);
-            setLoading(false); // Set loading to false in case of error too
+            setLoading(false);
         }
     };
 
@@ -22,42 +23,82 @@ const Datatable = () => {
         fetchData();
     }, []);
 
-    // Function to generate columns dynamically based on the keys of the first item in users array
     const generateColumns = () => {
         if (users.length === 0) return [];
-        
-        const firstUser = users[0];
-        const excludedColumns = ['updated_at', 'image','email_verified_at']; // Define columns to exclude
-        const generatedColumns = Object.keys(firstUser)
-            .filter(key => !excludedColumns.includes(key)) // Filter out excluded columns
+
+        const excludedColumns = ["updated_at", "image", "email_verified_at"];
+
+        const generatedColumns = Object.keys(users[0])
+            .filter((key) => !excludedColumns.includes(key)) // Filter out excluded columns
             .map((key) => ({
                 field: key,
                 headerName: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the first letter
-                width: 150, // You can set a default width here
+                width: 150, // Default column width
             }));
-    
+
+        generatedColumns.push(
+            {
+                field: "activity",
+                headerName: "Activity",
+                width: 100,
+                cellClassName: "cellWithStatus active", // Apply custom class for "Activity" cells
+                valueGetter: () => "Active", // For simplicity, consider all users as active
+            } /* , {
+            field: "actions", headerName: "Action", width: 200,
+            renderCell: () => (
+                // Render action buttons in the "Action" column
+                <div className="cellAction">
+                    <button className="viewButton">View</button>
+                    <button className="deleteButton">Delete</button>
+                </div>
+            )
+        } */
+        );
+
         return generatedColumns;
     };
 
-    // Function to conditionally apply class names to rows based on whether the user is an admin
+    // Apply custom class names to rows based on user role
     const getRowClassName = (params) => {
-        const isAdmin = params.row.role === 'admin'; // Assuming 'role' is the field that determines if a user is an admin
-        return isAdmin ? 'admin-row' : '';
+        const isAdmin = params.row.role === "admin"; // Assuming 'role' determines admin status
+        return isAdmin ? "admin-row" : "";
     };
 
+    const actionColumn = [
+        {
+            field: "action",
+            headerName: "Action",
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <div className="cellAction">
+                        <Link to="/Dashboard/users/0" style={{ textDecoration: "none" }}>
+                            <div className="viewButton">View</div>
+                        </Link>
+                        <div className="deleteButton">Delete</div>
+                    </div>
+                );
+            },
+        },
+    ];
+
     return (
-        <div className='datatable'>
+        <div className="datatable">
             {loading ? (
-               <div className="loader">Loading
-               <span></span>
-             </div>
+                // Show loading spinner while fetching data
+                <div className="loader">
+                    Loading
+                    <span></span>
+                </div>
             ) : (
+                // Render data grid once data is loaded
                 <DataGrid
                     rows={users}
-                    columns={generateColumns()} 
-                    pageSize={5} 
+                    columns={generateColumns().concat(actionColumn)}
+                    pageSize={9}
+                    rowsPerPageOptions={[9]}
                     checkboxSelection
-                    getRowClassName={getRowClassName} 
+                    getRowClassName={getRowClassName}
                 />
             )}
         </div>

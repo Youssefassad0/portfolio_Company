@@ -13,7 +13,7 @@ function App() {
 
     <><div className="App">
       <div>
-<Header/>
+        <Header />
         <div className="white-gradient" />
         <Hero />
       </div>

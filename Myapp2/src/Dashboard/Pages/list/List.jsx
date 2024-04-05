@@ -1,15 +1,26 @@
+/* eslint-disable react/prop-types */
 import "./List.scss"
-
+import { useEffect } from "react";
 import SideBar from "../Components/SideBar/SideBar"
 import NavBar from "../Components/NavBar/NavBar";
 import Datatable from "../Components/DataTable/Datatable";
+import { useNavigate } from 'react-router-dom'
 
-const List = () => {
+const List = ({userInfo}) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(userInfo);
+    if (!userInfo || userInfo.user.role !== 'admin') {
+      navigate('/');
+      
+    }
+  }, []);
   return (
     <div className="list">
       <SideBar/>
       <div className="listContainer">
-        <NavBar/>
+        <NavBar userInfo={userInfo}  />
        <Datatable/>
       </div>
      

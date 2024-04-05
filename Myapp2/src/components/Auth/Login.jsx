@@ -20,13 +20,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8001/api/login', {email,password}, {
+      const response = await axios.post('http://127.0.0.1:8001/api/login', { email, password }, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-      });    
-        localStorage.setItem('user-info', JSON.stringify(response.data));    
-       console.log(response.data);
+      });
+      localStorage.setItem('user-info', JSON.stringify(response.data));
+      console.log(response.data);
       navigate('/');
     } catch (error) {
       if (error.response) {
@@ -56,57 +56,57 @@ const Login = () => {
 
   return (
     <>
-    <div className="App">
-      <Header />
-    </div>
-    <div className="bodyLogin">
-      <div className="background">
-        <div className="shape"></div>
-        <div className="shape"></div>
+      <div className="App">
+        <Header />
       </div>
-      <form className="formLogin">
-        <h3>Login Here</h3>
-        {error.general && <div className="text-danger text-center">{error.general}</div>}
-        <label htmlFor="email">Email</label>
-        <input
-          className="input"
-          type="text"
-          id="email"
-          name="email" // Add name attribute
-          autoComplete="email" // Set autocomplete attribute to "email"
-          placeholder="Email or Phone"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          className="input"
-          type="password"
-          id="password"
-          name="password" // Add name attribute
-          autoComplete="current-password" // Set autocomplete attribute to "current-password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          />
-        <button className="btn" onClick={handleLogin}>
-          Log In
-        </button>
-        <Link to="/register">
-          <button className="btn">Sign Up</button>
-        </Link>
-        <div className="social">
-          <div className="go">
-            <i className="fab fa-google"></i> Google
-          </div>
-          <div className="fb">
-            <i className="fab fa-facebook"></i> Facebook
-          </div>
+      <div className="bodyLogin">
+        <div className="background">
+          <div className="shape"></div>
+          <div className="shape"></div>
         </div>
-      </form>
-    </div>
-          </>
+        <form className="formLogin">
+          <h3>Login Here</h3>
+          {error.general && <div className="text-danger text-center">{error.general}</div>}
+          <label htmlFor="email">Email</label>
+          <input
+            className="input"
+            type="text"
+            id="email"
+            name="email"
+            autoComplete="email"
+            placeholder="Email or Phone"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <label htmlFor="password">Password</label>
+          <input
+            className="input"
+            type="password"
+            id="password"
+            name="password"
+            autoComplete="current-password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="btn" onClick={handleLogin}>
+            Log In
+          </button>
+          <Link to="/register">
+            <button className="btn">Sign Up</button>
+          </Link>
+          <div className="social">
+            <div className="go">
+              <i className="fab fa-google"></i> Google
+            </div>
+            <div className="fb">
+              <i className="fab fa-facebook"></i> Facebook
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

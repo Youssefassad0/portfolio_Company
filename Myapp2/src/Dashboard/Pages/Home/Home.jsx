@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Widget from '../Components/widgets/Widget'
 import NavBar from '../Components/NavBar/NavBar'
 import SideBar from '../Components/SideBar/SideBar'
