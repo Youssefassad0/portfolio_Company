@@ -9,7 +9,6 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,6 +66,7 @@ const Login = () => {
       </div>
       <form className="formLogin">
         <h3>Login Here</h3>
+        {error.general && <div className="text-danger text-center">{error.general}</div>}
         <label htmlFor="email">Email</label>
         <input
           className="input"
@@ -78,7 +78,6 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {error.general && <div className="text-danger">{error.general}</div>}
 
         <label htmlFor="password">Password</label>
         <input
@@ -91,7 +90,6 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
-        {error.general && <div className="text-danger">{error.general}</div>}
         <button className="btn" onClick={handleLogin}>
           Log In
         </button>

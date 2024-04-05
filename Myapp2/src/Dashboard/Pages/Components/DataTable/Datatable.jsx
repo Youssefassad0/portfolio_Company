@@ -27,7 +27,7 @@ const Datatable = () => {
         if (users.length === 0) return [];
         
         const firstUser = users[0];
-        const excludedColumns = ['updated_at', 'image','Email_verified_at']; // Define columns to exclude
+        const excludedColumns = ['updated_at', 'image','email_verified_at']; // Define columns to exclude
         const generatedColumns = Object.keys(firstUser)
             .filter(key => !excludedColumns.includes(key)) // Filter out excluded columns
             .map((key) => ({

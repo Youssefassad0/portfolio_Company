@@ -24,7 +24,7 @@ function Register() {
     formData.append('name', name);
     formData.append('email', email);
     formData.append('password', password);
-    formData.append('image', image); // Append image directly
+    formData.append('image', image); 
 
     try {
       const response = await axios.post('http://127.0.0.1:8001/api/register', formData, {
