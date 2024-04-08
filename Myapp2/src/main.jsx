@@ -12,7 +12,7 @@ import Home from "./Dashboard/Pages/Home/Home";
 import List from "./Dashboard/Pages/list/List";
 import Single from './Dashboard/Pages/single/Single'
 import New from "./Dashboard/Pages/new/New";
-
+import { userInputs , productInputs } from "./Dashboard/FormSource";
 const userInfo = JSON.parse(localStorage.getItem('user-info'));
 ReactDOM.createRoot(document.getElementById("root")).render(
 
@@ -30,12 +30,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="users" >
             <Route index element={<List  />} />
             <Route path=":userId" element={<Single  />} />
-            <Route path="new" element={<New  />} />
+            <Route path="new" element={<New inputs={userInputs} title="Add New User" />} />
           </Route>
           <Route path="products" >
             <Route index element={<List />} />
-            <Route path=":productId" element={<Single />} />
-            <Route path="new" element={<New />} />
+            <Route path=":productId" element={<Single  />} />
+            <Route path="new" element={<New  inputs={productInputs} title="Add New Product"/>} />
           </Route>
         </Route>
       </Routes>

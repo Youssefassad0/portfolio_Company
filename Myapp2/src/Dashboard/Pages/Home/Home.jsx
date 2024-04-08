@@ -6,14 +6,27 @@ import './Home.scss'
 import Featured from '../Components/Featured/Featured'
 import Chart from '../Components/chart/Chart'
 import Transaction from '../Components/Transaction/Transaction'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import axios from 'axios'
 function Home() {
   const navigate = useNavigate();
+  const [users,setUsers]=useState([]);
+  const fetchData = async () => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8001/api/users");
+        setUsers(response.data.users);
+        console.log(users.length);
+        // setTimeout(() => setLoading(false), 1000);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        // setLoading(false);
+    }
+};
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
   
   useEffect(() => {
+    fetchData();
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
     }
@@ -25,7 +38,7 @@ function Home() {
       <div className="homeContainer">
         <NavBar userInfo={userInfo} />
         <div className="widgets">
-          <Widget type="user" />
+          <Widget type="user"  length={users.length} />
           <Widget type="products" />
           <Widget type="employes" />
           {/* <Widget type="balance" /> */}

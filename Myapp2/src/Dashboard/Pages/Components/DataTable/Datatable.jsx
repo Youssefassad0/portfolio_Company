@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./Datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
@@ -33,14 +34,14 @@ const Datatable = () => {
             .map((key) => ({
                 field: key,
                 headerName: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the first letter
-                width: 150, // Default column width
+                width: 200, // Default column width
             }));
 
         generatedColumns.push(
             {
                 field: "activity",
                 headerName: "Activity",
-                width: 100,
+                width: 70,
                 cellClassName: "cellWithStatus active", // Apply custom class for "Activity" cells
                 valueGetter: () => "Active", // For simplicity, consider all users as active
             } /* , {
@@ -58,9 +59,8 @@ const Datatable = () => {
         return generatedColumns;
     };
 
-    // Apply custom class names to rows based on user role
     const getRowClassName = (params) => {
-        const isAdmin = params.row.role === "admin"; // Assuming 'role' determines admin status
+        const isAdmin = params.row.role === "admin"; 
         return isAdmin ? "admin-row" : "";
     };
 
@@ -68,7 +68,7 @@ const Datatable = () => {
         {
             field: "action",
             headerName: "Action",
-            width: 200,
+            width: 150,
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
@@ -85,7 +85,6 @@ const Datatable = () => {
     return (
         <div className="datatable">
             {loading ? (
-                // Show loading spinner while fetching data
                 <div className="loader">
                     Loading
                     <span></span>
@@ -93,6 +92,7 @@ const Datatable = () => {
             ) : (
                 // Render data grid once data is loaded
                 <DataGrid
+                    className="datagrid"
                     rows={users}
                     columns={generateColumns().concat(actionColumn)}
                     pageSize={9}

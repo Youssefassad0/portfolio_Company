@@ -14,7 +14,9 @@ function SideBar() {
     return (
         <div className="sidebar">
             <div className="sidebar-top">
-                <span className="sidebar-logo">CristalInox</span>
+                <Link to="/dashboard" style={{ textDecoration: "none" }} >
+                    <span className="sidebar-logo">CristalInox</span>
+                </Link>
             </div>
             <hr id="hr" />
             <div className="sidebar-center">
@@ -22,7 +24,7 @@ function SideBar() {
                     <p className="title">
                         MAIN
                     </p>
-                    <Link to="/dashboard" >
+                    <Link to="/dashboard" style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon id="icon" />
                             <span>DashBoard</span>
@@ -31,7 +33,7 @@ function SideBar() {
                     <p className="sidebar-title">
                         Lists
                     </p>
-                    <Link to="/dashboard/users" >
+                    <Link to="/dashboard/users" style={{ textDecoration: "none" }}>
                         <li>
                             <PersonIcon id="icon" />
                             <span> Users </span>

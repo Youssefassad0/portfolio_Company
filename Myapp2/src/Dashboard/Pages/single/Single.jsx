@@ -12,7 +12,7 @@ function Single() {
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
 
   useEffect(() => {
-    console.log(userInfo);
+    // console.log(userInfo);
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
 

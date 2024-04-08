@@ -26,7 +26,7 @@ const Login = () => {
         }
       });
       localStorage.setItem('user-info', JSON.stringify(response.data));
-      console.log(response.data);
+      // console.log(response.data);
       navigate('/');
     } catch (error) {
       if (error.response) {

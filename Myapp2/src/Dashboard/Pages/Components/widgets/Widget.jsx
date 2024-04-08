@@ -5,14 +5,15 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import PersonIcon from '@mui/icons-material/Person';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-function Widget({ type }) {
+function Widget({ type, length }) {
     let data;
-    const mount = 100;
+    // const mount = 100;
     switch (type) {
         case "user":
             data = {
                 title: 'USERS',
                 isMoney: false,
+                mount: length,
                 link: "See all Users",
                 icon: (
                     <PersonIcon className='w-icon'
@@ -28,6 +29,8 @@ function Widget({ type }) {
             data = {
                 title: 'Products',
                 isMoney: true,
+                mount: 100,
+
                 link: "View all products",
                 icon: (
                     <Inventory2Icon className='w-icon'
@@ -42,6 +45,8 @@ function Widget({ type }) {
             data = {
                 title: 'Employes',
                 isMoney: false,
+                mount: 30,
+
                 link: "See all Employes ",
                 icon: (
                     <EngineeringIcon className='w-icon'
@@ -66,7 +71,7 @@ function Widget({ type }) {
                     }
                 </span>
                 <span className="w-counter">
-                    {mount}
+                    {data.mount}
                 </span><span className="w-link">
                     {data.link}
                 </span>
