@@ -45,12 +45,15 @@ function SideBar() {
                         <SiHomeassistantcommunitystore id="icon" />
                         <span>Products</span>
                     </li>
+                    <Link to="/dashboard/employes" >
                     <li>
                         <BadgeIcon id="icon" />
                         <span>Employees</span>
-                    </li> <li>
+                    </li>
+                    </Link>
+                     <li>
                         <LocalShippingIcon id="icon" />
-                        <span>Delivery</span>
+                        <span>Category</span>
                     </li>
                     <li>
                         <IoSettingsSharp id="icon" />

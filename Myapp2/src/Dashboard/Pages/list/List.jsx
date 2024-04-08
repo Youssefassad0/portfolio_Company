@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import "./List.scss";
 import { useEffect } from "react";
@@ -6,7 +7,7 @@ import NavBar from "../Components/NavBar/NavBar";
 import Datatable from "../Components/DataTable/Datatable";
 import { useNavigate } from 'react-router-dom';
 
-const List = () => {
+const List = ({url}) => {
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const List = () => {
       <SideBar />
       <div className="listContainer">
         <NavBar userInfo={userInfo} />
-        <Datatable />
+        <Datatable url={url} />
       </div>
     </div>
   );

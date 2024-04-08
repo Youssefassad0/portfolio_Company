@@ -16,34 +16,41 @@ import { userInputs, productInputs } from "./Dashboard/FormSource";
 import { useContext } from "react";
 import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
 function Appi() {
-    const { darkMode } = useContext(DarkModeContext);
-    return (
-        <div className={darkMode ? "dash dark" : "dash"}>
-          <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/Services" element={<Service />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/dashboard" >
-          <Route index element={<Home />} />
-          <Route path="users" >
-            <Route index element={<List  />} />
-            <Route path=":userId" element={<Single  />} />
-            <Route path="new" element={<New inputs={userInputs} title="Add New User" />} />
+  const { darkMode } = useContext(DarkModeContext);
+  const urlUsers = "http://127.0.0.1:8001/api/users";
+  const urlEmployes = "http://127.0.0.1:8001/api/employes";
+  return (
+    <div className={darkMode ? "dash dark" : "dash"}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/Services" element={<Service />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dashboard" >
+            <Route index element={<Home />} />
+            <Route path="users" >
+              <Route index element={<List url={urlUsers} />} />
+              <Route path=":userId" element={<Single />} />
+              <Route path="new" element={<New inputs={userInputs} title="Add New User" />} />
+            </Route>
+            <Route path="employes" >
+              <Route index element={<List url={urlEmployes} />} />
+              <Route path=":userId" element={<Single />} />
+              <Route path="new" element={<New inputs={userInputs} title="Add New Employe" />} />
+            </Route>
+            <Route path="products" >
+              <Route index element={<List />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} />
+            </Route>
           </Route>
-          <Route path="products" >
-            <Route index element={<List />} />
-            <Route path=":productId" element={<Single  />} />
-            <Route path="new" element={<New  inputs={productInputs} title="Add New Product"/>} />
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-        </div>
-    );
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default Appi;

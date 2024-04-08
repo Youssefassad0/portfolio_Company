@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import "./Datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
@@ -5,13 +6,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Datatable = () => {
+const Datatable = ({url}) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://127.0.0.1:8001/api/users");
+            const response = await axios.get(url);
             setUsers(response.data.users);
             setTimeout(() => setLoading(false), 1000);
         } catch (error) {
@@ -43,17 +44,8 @@ const Datatable = () => {
                 headerName: "Activity",
                 width: 70,
                 cellClassName: "cellWithStatus active", // Apply custom class for "Activity" cells
-                valueGetter: () => "Active", // For simplicity, consider all users as active
-            } /* , {
-            field: "actions", headerName: "Action", width: 200,
-            renderCell: () => (
-                // Render action buttons in the "Action" column
-                <div className="cellAction">
-                    <button className="viewButton">View</button>
-                    <button className="deleteButton">Delete</button>
-                </div>
-            )
-        } */
+                valueGetter: () => "Active", 
+            } 
         );
 
         return generatedColumns;
@@ -91,12 +83,12 @@ const Datatable = () => {
                 </div>
             ) : (
                 <>
-                 <div className="datatableTitle">
+                <div className="datatableTitle">
         Add New User
         <Link to="new" className="link">
-          Add New
+        Add New
         </Link>
-      </div>
+    </div>
                 <DataGrid
                     className="datagrid"
                     rows={users}
