@@ -90,7 +90,13 @@ const Datatable = () => {
                     <span></span>
                 </div>
             ) : (
-                // Render data grid once data is loaded
+                <>
+                 <div className="datatableTitle">
+        Add New User
+        <Link to="new" className="link">
+          Add New
+        </Link>
+      </div>
                 <DataGrid
                     className="datagrid"
                     rows={users}
@@ -99,7 +105,8 @@ const Datatable = () => {
                     rowsPerPageOptions={[9]}
                     checkboxSelection
                     getRowClassName={getRowClassName}
-                />
+                    />
+                    </>
             )}
         </div>
     );

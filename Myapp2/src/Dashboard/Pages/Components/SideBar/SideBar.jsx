@@ -9,8 +9,10 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import { IoLogOut } from "react-icons/io5";
 import BadgeIcon from '@mui/icons-material/Badge';
 import { Link } from "react-router-dom";
-
+import { DarkModeContext } from "../../../Context/darkModeContext";
+import { useContext } from "react";
 function SideBar() {
+    const { dispatch } = useContext(DarkModeContext);
     return (
         <div className="sidebar">
             <div className="sidebar-top">
@@ -68,8 +70,14 @@ function SideBar() {
                 </ul>
             </div>
             <div className="sidebar-bottom">
-                <div className="colorOption"></div>
-                <div className="colorOption"></div>
+                <div
+                    className="colorOption"
+                    onClick={() => dispatch({ type: "LIGHT" })}
+                ></div>
+                <div
+                    className="colorOption"
+                    onClick={() => dispatch({ type: "DARK" })}
+                ></div>
             </div>
         </div>
     );
