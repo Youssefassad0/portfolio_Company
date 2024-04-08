@@ -25,7 +25,7 @@ class EmployeFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'date_embauche' => fake()->date($format = 'Y-m-d', $max = 'now'),
             'salaire' => fake()->randomFloat($nbMaxDecimals = 2, $min = 1000, $max = 10000),
-            'photo' => null,
+            'image' => null,
         ];
     }
 }

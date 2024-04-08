@@ -45,7 +45,7 @@ function Widget({ type, length }) {
             data = {
                 title: 'Employes',
                 isMoney: false,
-                mount: 30,
+                mount: length,
 
                 link: "See all Employes ",
                 icon: (

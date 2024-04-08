@@ -15,6 +15,7 @@ import New from "./Dashboard/Pages/new/New";
 import { userInputs, productInputs } from "./Dashboard/FormSource";
 import { useContext } from "react";
 import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
+import Employes from "./Dashboard/Pages/Employes/Employes";
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
   const urlUsers = "http://127.0.0.1:8001/api/users";
@@ -32,13 +33,13 @@ function Appi() {
           <Route path="/dashboard" >
             <Route index element={<Home />} />
             <Route path="users" >
-              <Route index element={<List url={urlUsers} />} />
+              <Route index element={<List url={urlUsers} titleList="Add New User" />} />
               <Route path=":userId" element={<Single />} />
               <Route path="new" element={<New inputs={userInputs} title="Add New User" />} />
             </Route>
             <Route path="employes" >
-              <Route index element={<List url={urlEmployes} />} />
-              <Route path=":userId" element={<Single />} />
+              <Route index element={<Employes url={urlEmployes} titleList=" Employe"/>} />
+              <Route path=":empId" element={<Single />} />
               <Route path="new" element={<New inputs={userInputs} title="Add New Employe" />} />
             </Route>
             <Route path="products" >

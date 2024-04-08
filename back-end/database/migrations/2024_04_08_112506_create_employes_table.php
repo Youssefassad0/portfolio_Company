@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email');
             $table->date('date_embauche');
             $table->decimal('salaire', 10, 2);
-            $table->string('photo')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
