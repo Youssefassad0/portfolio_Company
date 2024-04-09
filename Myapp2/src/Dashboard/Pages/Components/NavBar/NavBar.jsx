@@ -4,7 +4,14 @@ import { MdDarkMode } from "react-icons/md";
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link } from "react-router-dom";
 import './NavBar.scss'
+import LightModeIcon from '@mui/icons-material/LightMode';
+import { useContext } from "react";
+import { DarkModeContext } from "../../../Context/darkModeContext";
 function NavBar({ userInfo }) {
+  const { dispatch } = useContext(DarkModeContext);
+  const { darkMode } = useContext(DarkModeContext);
+
+
   return (
     <div className="d-navbar">
       <div className="d-wrapper">
@@ -13,8 +20,10 @@ function NavBar({ userInfo }) {
           <FaSearch />
         </div>
         <div className="d-items">
-          <div className="d-item">
-            <MdDarkMode id="d-icon" />
+          <div className="d-item"onClick={()=>dispatch({type:'TOGGLE'})} >
+          {
+            darkMode ? <LightModeIcon className="d-icon" /> : <MdDarkMode id="d-icon" /> 
+           }
           </div>
           <div className="d-item">
             {userInfo && userInfo.user.image ? (

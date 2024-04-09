@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 const Datatable = ({ url , titleList }) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-console.log(titleList);
+
+
     const fetchData = async () => {
         try {
             const response = await axios.get(url);
@@ -52,6 +53,13 @@ console.log(titleList);
         const isAdmin = params.row.role === "admin";
         return isAdmin ? "admin-row" : "";
     };
+    const deleteUser = async (userId) => {
+        try {
+            await axios.delete(`http://localhost:8001/api/users/${userId}`);
+        } catch (error) {
+            console.error("Erreur lors de la suppression de l'utilisateur :", error);
+        }
+    };
 
     const actionColumn = [
         {
@@ -60,16 +68,17 @@ console.log(titleList);
             width: 150,
             renderCell: (params) => (
                 <div className="cellAction">
-                    <Link to="/Dashboard/users/0" style={{ textDecoration: "none" }}>
+                    <Link to={`/Dashboard/users/${params.row.id}`} style={{ textDecoration: "none" }}>
                         <div className="viewButton">View</div>
                     </Link>
-                    <div className="deleteButton">Delete</div>
+                    <div className="deleteButton" onClick={() =>deleteUser(params.row.id)}>Delete</div>
                 </div>
             ),
             key: "action", // Unique key for action column
         },
     ];
-
+    
+    
     return (
         <div className="datatable">
             {loading ? (
@@ -84,7 +93,7 @@ console.log(titleList);
                         titleList
                     } 
 
-                        <Link to="/new" className="link"> {/* Added leading slash */}
+                        <Link to="/dashboard/users/new" className="link"> {/* Added leading slash */}
                             Add New
                         </Link>
                     </div>

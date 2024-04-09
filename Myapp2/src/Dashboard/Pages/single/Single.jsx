@@ -6,11 +6,13 @@ import NavBar from '../Components/NavBar/NavBar'
 import Chart from '../Components/chart/Chart'
 import Transaction from '../Components/Transaction/Transaction'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useParams } from 'react-router-dom';
 function Single() {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
 
+const {id}=useParams();
+console.log(id);
   useEffect(() => {
     // console.log(userInfo);
     if (!userInfo || userInfo.user.role !== 'admin') {

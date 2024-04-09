@@ -46,12 +46,12 @@ function SideBar() {
                         <span>Products</span>
                     </li>
                     <Link to="/dashboard/employes" >
-                    <li>
-                        <BadgeIcon id="icon" />
-                        <span>Employees</span>
-                    </li>
+                        <li>
+                            <BadgeIcon id="icon" />
+                            <span>Employees</span>
+                        </li>
                     </Link>
-                     <li>
+                    <li>
                         <LocalShippingIcon id="icon" />
                         <span>Category</span>
                     </li>

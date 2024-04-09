@@ -1,0 +1,31 @@
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Style pour les cellules du tableau */
+  .table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Style pour l'en-tête du tableau */
+  .table thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Style pour les lignes impaires du tableau */
+  .table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  .button:nth-child(1){
+    background-color: aquamarine;
+}.button:nth-child(2){
+    background-color: rgba(0, 87, 109, 0.324);
+}.button:nth-child(3){
+    background-color: rgb(216, 5, 5);
+}
