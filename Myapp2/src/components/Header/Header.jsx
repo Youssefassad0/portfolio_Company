@@ -73,7 +73,7 @@ function Header() {
                 }>
                   <Dropdown.Item>Your Profile</Dropdown.Item>
                   {user.user.role === 'admin' && (
-                    <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>
+                    <Dropdown.Item><Link to="/dashboard" style={{ textDecoration:'none' }}  >Dashboard</Link></Dropdown.Item>
                   )}
                   <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
                 </NavDropdown>

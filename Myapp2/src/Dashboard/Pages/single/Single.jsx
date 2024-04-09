@@ -1,25 +1,40 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import './Single.scss'
-import SideBar from '../Components/SideBar/SideBar'
-import NavBar from '../Components/NavBar/NavBar'
-import Chart from '../Components/chart/Chart'
-import Transaction from '../Components/Transaction/Transaction'
-import { useEffect } from 'react'
-import { useNavigate , useParams } from 'react-router-dom';
+import { useEffect , useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import './Single.scss';
+import SideBar from '../Components/SideBar/SideBar';
+import NavBar from '../Components/NavBar/NavBar';
+import Chart from '../Components/chart/Chart';
+import Transaction from '../Components/Transaction/Transaction';
+import  axios  from 'axios';
+
 function Single() {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
+  const { userId } = useParams();
+  const [userData, setUserData] = useState(null);
 
-const {id}=useParams();
-console.log(id);
+const fetchData = async ()=>{
+  try{
+    const user=await axios.get('http://127.0.0.1:8001/api/users/'+userId);
+    // console.log(user.data.user);
+    setUserData(user.data.user)
+  }
+  catch(error){
+    console.error('error de server: '+error);
+  }
+}
   useEffect(() => {
-    // console.log(userInfo);
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
-
     }
-  }, []);
+    else{
+      fetchData();
+    }
+  }, [navigate, userInfo]);
+
   return (
     <div className="single">
       <SideBar />
@@ -27,40 +42,33 @@ console.log(id);
         <NavBar userInfo={userInfo} />
         <div className="user-top">
           <div className="user-left">
-            <div className="editButton">
-              Edit
-            </div>
-            <h1 className="user-title">
-              Informations
-            </h1>
+            <div className="editButton">Edit</div>
+            <h1 className="user-title">Informations</h1>
             <div className="user-item">
               <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/07/jujutsu-kaisen-satoru-gojo.jpg" alt="profile" className="itemImg" />
               <div className="details">
-                <h1 className="itemTitle">
-                  Assad Aziz
-                </h1>
+                <h1 className="itemTitle">{userData ? userData.name : 'Loading...'}</h1>
                 <div className="detailItem">
-                  <div className="itemKey">Email : </div>
-                  <div className="itemValue">assad@gmail.com </div>
+                  <div className="itemKey">Email :</div>
+                  <div className="itemValue">{userData ? userData.email : 'Loading...'}</div>
                 </div>
                 <div className="detailItem">
-                  <div className="itemKey">Phone : </div>
-                  <div className="itemValue">+2120678383</div>
-                </div>
-
-                <div className="detailItem">
-                  <div className="itemKey">Adress : </div>
-                  <div className="itemValue">zar9toni , boulvrad j33</div>
+                  <div className="itemKey">Phone :</div>
+                  <div className="itemValue">{userData ? userData.phone : 'Loading...'}</div>
                 </div>
                 <div className="detailItem">
-                  <div className="itemKey">Country  : </div>
-                  <div className="itemValue">morroco </div>
+                  <div className="itemKey">Adress :</div>
+                  <div className="itemValue">{userData ? userData.address : 'Loading...'}</div>
+                </div>
+                <div className="detailItem">
+                  <div className="itemKey">Country :</div>
+                  <div className="itemValue">{userData ? userData.country : 'Loading...'}</div>
                 </div>
               </div>
             </div>
           </div>
           <div className="user-right">
-            <Chart aspect={3 / 1} title={"Last 6 Months (Revenue)"} />
+            <Chart aspect={3 / 1} title="Last 6 Months (Revenue)" />
           </div>
         </div>
         <div className="user-bottom">
@@ -68,7 +76,7 @@ console.log(id);
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Single
+export default Single;
