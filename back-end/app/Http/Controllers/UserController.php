@@ -20,6 +20,11 @@ class UserController extends Controller
     public function listUser($id)
     {
         $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User Not Found'
+            ]);
+        };
         return response()->json([
             'user' => $user
         ]);
@@ -73,7 +78,41 @@ class UserController extends Controller
     }
 
 
+    public function update(Request $request, $id)
+    {
+        // Find the user by ID
+        $user = User::find($id);
 
+        // If user is not found, return error response
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:4',
+            "telephone" => "nullable|numeric|max:10|min:8",
+            "addresse" => "nullable|string",
+            "country" => "nullable|string",
+            "image" => "nullable|mimes:png,jpeg,jpg,webp",
+        ]);
+
+        // Update user data
+        $user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => $validatedData['password'],
+            "telephone" => $validatedData['telephone'],
+            "addresse" => $validatedData['addresse'],
+            "country" => $validatedData['country'],
+            "image" => $validatedData['image'],
+        ]);
+
+        // Return success response
+        return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
+    }
 
 
 

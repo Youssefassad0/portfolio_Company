@@ -26,6 +26,7 @@ Route::get('/users', [UserController::class, 'listUsers']);
 Route::get('/users/{id}', [UserController::class, 'listUser']);
 Route::delete('/users/{id}', [UserController::class, 'deleteUser']);
 Route::post('/addUser', [UserController::class, 'addUser']);
+Route::put('/user/{id}', [UserController::class, 'update']);
 
 Route::delete('/employes/{id}', [UserController::class, 'deleteEmploye']);
 Route::get('/employes/{id}', [UserController::class, 'getEmploye']);

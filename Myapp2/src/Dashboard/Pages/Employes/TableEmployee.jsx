@@ -4,20 +4,19 @@ import { Link } from "react-router-dom";
 
 function TableEmployee() {
     const [employes, setEmployes] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); // Initialize loading state as true
     const [message, setMessage] = useState(null);
 
     const fetchData = async () => {
         try {
-          
             const response = await axios.get("http://localhost:8001/api/employes");
             setEmployes(response.data.employes);
-          
+            setTimeout(() => {
+                setLoading(false); // Set loading state to false after 2 seconds
+            }, 1000);
         } catch (error) {
-            setLoading(true)
             console.error("Error fetching employes:", error);
-        } finally {
-            setLoading(false);
+            setLoading(false); // Set loading state to false in case of error
         }
     };
 
@@ -34,7 +33,7 @@ function TableEmployee() {
                 setTimeout(() => {
                     setMessage(null);
                     window.location.reload();
-                }, 500); // Changed timeout to 2000 milliseconds
+                }, 500);
             }
         } catch (error) {
             console.error("Erreur lors de la suppression de l'Employe :", error);
@@ -44,21 +43,19 @@ function TableEmployee() {
 
     return (
         <>
-          <div className="datatableTitle">
-                  Add New Employe
-
-                        <Link to="/dashboard/employes/new" className="link"> {/* Added leading slash */}
-                            Add New
-                        </Link>
-                    </div>
+            <div className="datatableTitle">
+                Add New Employe
+                <Link to="/dashboard/employes/new" className="link">
+                    Add New
+                </Link>
+            </div>
             {loading ? (
-               <div className="cube-loader">
-               <div className="cube cube1"></div>
-               <div className="cube cube2"></div>
-               <div className="cube cube3"></div>
-               <div className="cube cube4"></div>
-             </div>
-             
+                <div className="cube-loader">
+                    <div className="cube cube1"></div>
+                    <div className="cube cube2"></div>
+                    <div className="cube cube3"></div>
+                    <div className="cube cube4"></div>
+                </div>
             ) : (
                 <>
                     {message && (

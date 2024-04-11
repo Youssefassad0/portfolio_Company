@@ -1,10 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './Profile.scss'
 import Header from '../Header/Header';
-
-import { useParams } from 'react-router-dom'
+import { useParams ,useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { FaCamera } from 'react-icons/fa';
+import axios  from 'axios';
 const ProfileSettings = () => {
+    const urlImg="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+    const userInfo=JSON.parse(localStorage.getItem('user-info'));
+    const navigate = useNavigate();
     const { id } = useParams();
-
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        password: '',
+        telephone: '',
+        addresse: '',
+        country: '',
+        image: ''
+    });
+    const fetchData=async ()=>{
+        const response = await axios.get('http://127.0.0.1:8001/api/users/'+id)
+        setUser(response.data.user);
+    }
+    useEffect(() => {
+        if (!userInfo) {
+                    navigate('/');
+        }
+        fetchData();
+      }, [id]);
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        // Perform upload logic here (e.g., using FormData and axios)
+    };
     return (
         <>
             <div className="App">
@@ -14,9 +42,14 @@ const ProfileSettings = () => {
                 <div className="row">
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                            <img className="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="Profile" />
-                            <span className="font-weight-bold">Edogaru</span>
-                            <span className="text-black-50">edogaru@mail.com.my</span>
+                             <label className="profile-img-container" htmlFor="file" id="imgProfile" >
+                                <img className="rounded-circle mt-5" width="150px" src={user.image ? `http://localhost:8001/${user.image}` : urlImg} alt="Profile" />
+                                <FaCamera className="camera-icon" />
+                                </label>
+                                <input  type="file" name='image' onChange={handleImageChange} id="file" style={{ display:'none' }} />
+                        
+                            <span className="font-weight-bold">{user.name}</span>
+                            <span className="text-black-50">{user.email}</span>
                         </div>
                     </div>
                     <div className="col-md-5 border-right">
@@ -27,30 +60,30 @@ const ProfileSettings = () => {
                             <div className="row mt-2">
                                 <div className="col-md-6">
                                     <label className="labels">Name</label>
-                                    <input type="text" className="form-control" placeholder="First Name" />
+                                    <input required type="text" className="form-control"  name="name" value={user.name} />
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">Email</label>
-                                    <input type="text" className="form-control" placeholder="Surname" />
+                                    <input required type="text" className="form-control"  name="email" value={user.email} />
                                 </div>
                             </div>
                             <div className="row mt-2">
                                 <div className="col-md-6">
                                     <label className="labels">Change Password</label>
-                                    <input type="password" className="form-control" placeholder="First Name" />
+                                    <input required type="password" className="form-control" placeholder='New password'  name="password" value={user.password}/>
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">phone Number</label>
-                                    <input type="text" className="form-control" placeholder="Surname" />
+                                    <input required type="text" className="form-control" placeholder='your phone'  name="telephone" value={user.telephone} />
                                 </div>
                             </div> <div className="row mt-2">
                                 <div className="col-md-6">
                                     <label className="labels">Adress</label>
-                                    <input type="text" className="form-control" placeholder="First Name" />
+                                    <input required type="text" className="form-control" placeholder='your address'  name="addresse" value={user.addresse}/>
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">Country</label>
-                                    <input type="text" className="form-control" placeholder="Surname" />
+                                    <input required type="text" className="form-control" placeholder='your country '  name="country" value={user.country}/>
                                 </div>
                             </div>
                             <div className="mt-5 text-center">
@@ -66,17 +99,17 @@ const ProfileSettings = () => {
                             <br />
                             <div className="col-md-12">
                                 <label className="labels">LinkedIn</label>
-                                <input type="text" className="form-control" placeholder="LinkedIn Profile URL" />
+                                <input required type="text" className="form-control" placeholder="LinkedIn Profile URL" />
                             </div>
                             <br />
                             <div className="col-md-12">
                                 <label className="labels">Twitter</label>
-                                <input type="text" className="form-control" placeholder="Twitter Profile URL" />
+                                <input required type="text" className="form-control" placeholder="Twitter Profile URL" />
                             </div>
                             <br />
                             <div className="col-md-12">
                                 <label className="labels">Personal Website</label>
-                                <input type="text" className="form-control" placeholder="Personal Website URL" />
+                                <input required type="text" className="form-control" placeholder="Personal Website URL" />
                             </div>
                         </div>
                     </div>
