@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('role')->nullable()->default('user');
             $table->string('image')->nullable();
+            $table->string('urlLinkedin')->nullable();
+            $table->string('urlTwitter')->nullable();
+            $table->string('urlWebsite')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

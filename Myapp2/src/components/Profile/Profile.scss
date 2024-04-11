@@ -50,11 +50,10 @@
     transition: opacity 0.3s ease;
 }
 
-#imgProfile:hover {
-    filter: grayscale(100%);
-}
+
 
 #imgProfile:hover {
+    filter: grayscale(100%);
     .camera-icon {
         opacity: 1;
         /* Show the icon on hover */

@@ -36,9 +36,9 @@ class UserController extends Controller
             'name' => 'required|string',
             'password' => 'required|min:4',
             'image' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'phone' => 'nullable|numeric|max:10',
-            'adresse' => 'nullable|max:10',
-            'country' => 'nullable',
+            'telephone' => 'nullable|numeric|max:10',
+            'addresse' => 'nullable|string',
+            'country' => 'nullable|string',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -61,7 +61,7 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
-        $user->adrresse = $request->input('adrresse');
+        $user->address = $request->input('address');
         $user->country = $request->input('country');
         $user->password = Hash::make($request->input('password'));
         $user->image = $imagePath; // Assign image path
@@ -70,6 +70,40 @@ class UserController extends Controller
         // Return user object with image path in the response
         return response()->json(['user' => $user], 200);
     }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'nullable|string|min:4',
+            'telephone' => 'nullable|numeric|max:10|min:8',
+            'addresse' => 'nullable|string',
+            'country' => 'nullable|string',
+            'role' => 'nullable|string',
+            'image' => 'nullable|mimes:png,jpeg,jpg,webp',
+            'urlLinkedin' => 'nullable|string',
+            'urlTwitter' => 'nullable|string',
+            'urlWebsite' => 'nullable|string',
+        ]);
+
+        $user->update($validatedData);
+
+        return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
+    }
+
+
+
+
+
+
+
     public function deleteUser($id)
     {
         $user = User::findOrFail($id);
@@ -78,41 +112,8 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, $id)
-    {
-        // Find the user by ID
-        $user = User::find($id);
 
-        // If user is not found, return error response
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
 
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:4',
-            "telephone" => "nullable|numeric|max:10|min:8",
-            "addresse" => "nullable|string",
-            "country" => "nullable|string",
-            "image" => "nullable|mimes:png,jpeg,jpg,webp",
-        ]);
-
-        // Update user data
-        $user->update([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => $validatedData['password'],
-            "telephone" => $validatedData['telephone'],
-            "addresse" => $validatedData['addresse'],
-            "country" => $validatedData['country'],
-            "image" => $validatedData['image'],
-        ]);
-
-        // Return success response
-        return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
-    }
 
 
 
