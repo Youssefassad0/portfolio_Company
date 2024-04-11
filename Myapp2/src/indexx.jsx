@@ -16,6 +16,7 @@ import { userInputs, productInputs } from "./Dashboard/FormSource";
 import { useContext } from "react";
 import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
 import Employes from "./Dashboard/Pages/Employes/Employes";
+import Profile from "./components/Profile/Profile";
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
   const urlUsers = "http://127.0.0.1:8001/api/users";
@@ -30,6 +31,7 @@ function Appi() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path="/dashboard" >
             <Route index element={<Home />} />
             <Route path="users" >

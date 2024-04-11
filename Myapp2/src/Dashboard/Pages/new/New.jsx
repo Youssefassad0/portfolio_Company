@@ -44,6 +44,7 @@ function New( {inputs,title} ) {
               <input
                 type="file"
                 id="file"
+                name='image'
                 onChange={(e) => setFile(e.target.files[0])}
                 style={{ display: "none" }}
               />

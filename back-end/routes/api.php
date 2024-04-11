@@ -25,5 +25,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/users', [UserController::class, 'listUsers']);
 Route::get('/users/{id}', [UserController::class, 'listUser']);
 Route::delete('/users/{id}', [UserController::class, 'deleteUser']);
+Route::post('/addUser', [UserController::class, 'addUser']);
+
 Route::delete('/employes/{id}', [UserController::class, 'deleteEmploye']);
+Route::get('/employes/{id}', [UserController::class, 'getEmploye']);
 Route::get('/employes', [UserController::class, 'listEmployes']);

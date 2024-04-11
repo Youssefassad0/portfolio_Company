@@ -13,14 +13,14 @@ import  axios  from 'axios';
 function Single() {
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
-  const { userId } = useParams();
+  const { empId } = useParams();
   const [userData, setUserData] = useState(null);
 
 const fetchData = async ()=>{
   try{
-    const user=await axios.get('http://127.0.0.1:8001/api/users/'+userId);
+    const response=await axios.get('http://127.0.0.1:8001/api/employes/'+empId);
     // console.log(user.data.user);
-    setUserData(user.data.user)
+    setUserData(response.data.employe)
   }
   catch(error){
     console.error('error de server: '+error);
@@ -54,11 +54,11 @@ const fetchData = async ()=>{
                 </div>
                 <div className="detailItem">
                   <div className="itemKey">Phone :</div>
-                  <div className="itemValue">{userData ? userData.phone : 'Loading...'}</div>
+                  <div className="itemValue">{userData ? userData.telephone : 'Loading...'}</div>
                 </div>
                 <div className="detailItem">
                   <div className="itemKey">Adress :</div>
-                  <div className="itemValue">{userData ? userData.address : 'Loading...'}</div>
+                  <div className="itemValue">{userData ? userData.addresse : 'Loading...'}</div>
                 </div>
                 <div className="detailItem">
                   <div className="itemKey">Country :</div>
