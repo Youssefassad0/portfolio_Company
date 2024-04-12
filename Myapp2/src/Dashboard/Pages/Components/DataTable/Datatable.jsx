@@ -28,7 +28,7 @@ const Datatable = ({ url , titleList }) => {
     const generateColumns = () => {
         if (users.length === 0) return [];
 
-        const excludedColumns = ["updated_at", "image", "email_verified_at",'date_naissance','adresse','email','created_at'];
+        const excludedColumns = ["updated_at", "urlLinkedin","urlTwitter","urlWebsite", "image", "email_verified_at",'date_naissance','adresse','email','created_at'];
 
         const generatedColumns = Object.keys(users[0])
             .filter((key) => !excludedColumns.includes(key))

@@ -84,27 +84,27 @@ export const productInputs = [
 export const employeInputs = [
     {
         id: 1,
-        label: "LastName",
+        label: "nom",
         type: "text",
-        placeholder: "assad youssef",
+        placeholder: "assad",
     },
     {
         id: 2,
-        label: "FirstName",
+        label: "prenom",
         type: "text",
-        placeholder: "John Doe",
+        placeholder: "youssef",
     },
     {
         id: 3,
         label: "Email",
-        type: "mail",
+        type: "email",
         placeholder: "john_doe@gmail.com",
     },
     {
         id: 4,
         label: "Phone",
         type: "text",
-        placeholder: "+1 234 567 89",
+        placeholder: "06 23 45 67 89",
     },
     {
         id: 6,
@@ -127,6 +127,6 @@ export const employeInputs = [
         id: 7,
         label: "Salaire",
         type: "number",
-        placeholder: "2000/05/12",
+        placeholder: "",
     },
 ];

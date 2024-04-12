@@ -35,20 +35,21 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'name' => 'required|string',
             'password' => 'required|min:4',
-            'image' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'telephone' => 'nullable|numeric|max:10',
-            'addresse' => 'nullable|string',
+            'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048', // Adjusted validation for image upload
+            'telephone' => 'nullable|string|max:10', // Changed to string as telephone might have formatting
+            'address' => 'nullable|string', // Corrected field name from 'addresse' to 'address'
             'country' => 'nullable|string',
         ]);
+
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
         $imagePath = null;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = time() . '.' . $extension;
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
             $path = 'uploads/users';
             $file->move($path, $fileName);
 
@@ -60,10 +61,10 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->phone = $request->input('phone');
-        $user->address = $request->input('address');
-        $user->country = $request->input('country');
         $user->password = Hash::make($request->input('password'));
+        $user->telephone = $request->input('telephone'); // Changed to 'telephone' to match input name
+        $user->addresse = $request->input('address');
+        $user->country = $request->input('country');
         $user->image = $imagePath; // Assign image path
         $user->save();
 
@@ -98,12 +99,6 @@ class UserController extends Controller
         return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
     }
 
-
-
-
-
-
-
     public function deleteUser($id)
     {
         $user = User::findOrFail($id);
@@ -111,29 +106,6 @@ class UserController extends Controller
         return response()->json(['message' => 'Utilisateur supprimé avec succès'], 200);
     }
 
-
-
-
-
-
-
-
-
-
-    public function listEmployes()
-    {
-        $employes = Employe::all();
-        return response()->json([
-            'employes' => $employes
-        ], 200);
-    }
-
-    public function deleteEmploye($id)
-    {
-        $employe = Employe::findOrFail($id);
-        $employe->delete();
-        return response()->json(['message' => 'Employée supprimé avec succès'], 200);
-    }
     public function getEmploye($id)
     {
         $employe = Employe::find($id);

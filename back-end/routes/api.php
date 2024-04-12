@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::delete('/users/{id}', [UserController::class, 'deleteUser']);
 Route::post('/addUser', [UserController::class, 'addUser']);
 Route::post('/user/{id}', [UserController::class, 'updateUser']);
 
-Route::delete('/employes/{id}', [UserController::class, 'deleteEmploye']);
-Route::get('/employes/{id}', [UserController::class, 'getEmploye']);
-Route::get('/employes', [UserController::class, 'listEmployes']);
+Route::delete('/employes/{id}', [EmployeeController::class, 'deleteEmploye']);
+Route::get('/employes/{id}', [EmployeeController::class, 'getEmploye']);
+Route::get('/employes', [EmployeeController::class, 'listEmployes']);
+Route::post('/addEmploye', [EmployeeController::class, 'addEmploye']);
