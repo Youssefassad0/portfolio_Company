@@ -26,7 +26,7 @@ class UserController extends Controller
             ]);
         };
         return response()->json([
-            'user' => $user
+            'data' => $user
         ]);
     }
     public function addUser(Request $request)
@@ -108,13 +108,5 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return response()->json(['message' => 'Utilisateur supprimé avec succès'], 200);
-    }
-
-    public function getEmploye($id)
-    {
-        $employe = Employe::find($id);
-        return response()->json([
-            'employe' => $employe
-        ]);
     }
 }

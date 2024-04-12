@@ -20,7 +20,7 @@ class EmployeFactory extends Factory
             'nom' => fake()->lastName(),
             'prenom' => fake()->firstName(),
             'date_naissance' => fake()->date($format = 'Y-m-d', $max = 'now'),
-            'adresse' => fake()->address(),
+            'addresse' => fake()->address(),
             'telephone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
             'date_embauche' => fake()->date($format = 'Y-m-d', $max = 'now'),

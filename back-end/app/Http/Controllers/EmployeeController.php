@@ -17,7 +17,13 @@ class EmployeeController extends Controller
             'employes' => $employes
         ], 200);
     }
-
+    public function listEmploye($id)
+    {
+        $employes = Employe::find($id);
+        return response()->json([
+            'data' => $employes
+        ], 200);
+    }
     public function deleteEmploye($id)
     {
         $employe = Employe::findOrFail($id);

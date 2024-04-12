@@ -30,6 +30,6 @@ Route::post('/addUser', [UserController::class, 'addUser']);
 Route::post('/user/{id}', [UserController::class, 'updateUser']);
 
 Route::delete('/employes/{id}', [EmployeeController::class, 'deleteEmploye']);
-Route::get('/employes/{id}', [EmployeeController::class, 'getEmploye']);
+Route::get('/employes/{id}', [EmployeeController::class, 'listEmploye']);
 Route::get('/employes', [EmployeeController::class, 'listEmployes']);
 Route::post('/addEmploye', [EmployeeController::class, 'addEmploye']);

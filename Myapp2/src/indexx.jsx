@@ -36,17 +36,17 @@ function Appi() {
             <Route index element={<Home />} />
             <Route path="users" >
               <Route index element={<List url={urlUsers} titleList="Add New User" />} />
-              <Route path=":userId" element={<Single/>} />
+              <Route path=":id" element={<Single entityType="user" />} />
               <Route path="new" element={<New inputs={userInputs} type="user" title="Add New User" />} />
             </Route>
             <Route path="employes" >
-              <Route index element={<Employes url={urlEmployes} titleList=" Employe"/>} />
-              <Route path=":empId" element={<Single />} />
+              <Route index element={<Employes/>} />
+              <Route path=":id" element={<Single entityType="employee" />} />
               <Route path="new" element={<New inputs={employeInputs} type="employe" title="Add New Employe" />} />
             </Route>
             <Route path="products" >
               <Route index element={<List />} />
-              <Route path=":productId" element={<Single />} />
+              <Route path=":id" element={<Single entityType="product" />} />
               <Route path="new" element={<New inputs={productInputs} type="produit" title="Add New Product" />} />
             </Route>
           </Route>

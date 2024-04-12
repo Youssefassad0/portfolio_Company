@@ -5,6 +5,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import PersonIcon from '@mui/icons-material/Person';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import { Link } from 'react-router-dom';
 function Widget({ type, length }) {
     let data;
     // const mount = 100;
@@ -14,6 +15,7 @@ function Widget({ type, length }) {
                 title: 'USERS',
                 isMoney: false,
                 mount: length,
+                url:'/dashboard/users',
                 link: "See all Users",
                 icon: (
                     <PersonIcon className='w-icon'
@@ -73,7 +75,9 @@ function Widget({ type, length }) {
                 <span className="w-counter">
                     {data.mount}
                 </span><span className="w-link">
+                    <Link to={data.url}>
                     {data.link}
+                </Link>                    
                 </span>
             </div>
             <div className="right">
