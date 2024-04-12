@@ -1,33 +1,41 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+import  { useEffect, useState } from 'react';
 import './New.scss';
 import SideBar from '../Components/SideBar/SideBar';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
-import { useEffect, useState } from 'react';
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useNavigate } from 'react-router-dom';
 
-function New({ inputs, title , type }) {
+function New({ inputs, title, type }) {
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
   const [file, setFile] = useState("");
+  const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
     }
-  }, []);
+  }, [navigate, userInfo]);
+
+  const handleChange = (e, name) => {
+    const value = e.target.value;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('image', file);
+    const formDataWithFile = new FormData();
+    formDataWithFile.append('image', file);
 
-    inputs.forEach(input => {
-      formData.append(input.name, input.value);
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataWithFile.append(key, value);
     });
 
     try {
@@ -40,16 +48,21 @@ function New({ inputs, title , type }) {
         url = 'http://127.0.0.1:8001/api/addProduit';
       }
 
-      const response = await axios.post(url, formData, {
+      const response = await axios.post(url, formDataWithFile, {
         headers: {
-          'Content-Type': 'multipart/form-data' // Set content type for FormData
+          'Content-Type': 'multipart/form-data'
         }
       });
-      
+
       console.log(response.data);
+      setErrors({});
       // Do something with the response, e.g., redirect the user.
     } catch (error) {
-      console.error('Error while sending data:', error);
+      if (error.response && error.response.data && error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        console.error('Error while sending data:', error);
+      }
     }
   };
 
@@ -69,7 +82,7 @@ function New({ inputs, title , type }) {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}> {/* Add onSubmit event handler */}
+            <form onSubmit={handleSubmit}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon-image" />
@@ -89,13 +102,15 @@ function New({ inputs, title , type }) {
                   <input
                     type={input.type}
                     placeholder={input.placeholder}
-                    name={input.name} // Add name attribute for input fields
-                    value={input.value} // Bind input value
-                    onChange={(e) => input.onChange(e.target.value)} // Handle input change
+                    name={input.name}
+                    value={formData[input.name] || ''}
+                    onChange={(e) => handleChange(e, input.name)}
                   />
+                  {errors[input.name] && <div className="text-danger">{errors[input.name]}</div>}
                 </div>
               ))}
-              <button type="submit">Send</button> {/* Specify type as submit */}
+
+              <button type="submit">Send</button>
             </form>
           </div>
         </div>

@@ -1,17 +1,12 @@
 export const userInputs = [
     {
         id: 1,
-        label: "LastName",
+        label: "name",
         name:'name',
         type: "text",
         placeholder: "john_doe",
     },
-    {
-        id: 2,
-        label: "FirstName",
-        type: "text",
-        placeholder: "John Doe",
-    },
+    
     {
         id: 3,
         label: "Email",
@@ -20,22 +15,22 @@ export const userInputs = [
         placeholder: "john_doe@gmail.com",
     },
     {
-        id: 4,
-        label: "Phone",
-        name:'phone',
-        type: "text",
-        placeholder: "+1 234 567 89",
-    },
-    {
         id: 5,
         label: "Password",
         name:'password',
         type: "password",
     },
     {
+        id: 4,
+        label: "Phone",
+        name:'telephone',
+        type: "text",
+        placeholder: "+1 234 567 89",
+    },
+    {
         id: 6,
         label: "Address",
-        name:'adrresse',
+        name:'addresse',
         type: "text",
         placeholder: "Elton St. 216 NewYork",
     },
