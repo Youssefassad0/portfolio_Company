@@ -45,7 +45,7 @@ function SideBar() {
                         <SiHomeassistantcommunitystore id="icon" />
                         <span>Products</span>
                     </li>
-                    <Link to="/dashboard/employes" >
+                    <Link to="/dashboard/employes"  style={{ textDecoration: "none" }} >
                         <li>
                             <BadgeIcon id="icon" />
                             <span>Employees</span>

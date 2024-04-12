@@ -36,7 +36,7 @@ function Appi() {
             <Route index element={<Home />} />
             <Route path="users" >
               <Route index element={<List url={urlUsers} titleList="Add New User" />} />
-              <Route path=":userId" element={<Single />} />
+              <Route path=":userId" element={<Single/>} />
               <Route path="new" element={<New inputs={userInputs} type="user" title="Add New User" />} />
             </Route>
             <Route path="employes" >
