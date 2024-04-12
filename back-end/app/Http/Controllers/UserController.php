@@ -70,7 +70,7 @@ class UserController extends Controller
             $user->save();
 
             // Return user object with image path in the response
-            return response()->json(['user' => $user], 200);
+            return response()->json(['user' => $user, "message" => "added with success ! "], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
         }
