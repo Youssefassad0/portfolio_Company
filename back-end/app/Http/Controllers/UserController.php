@@ -76,9 +76,10 @@ class UserController extends Controller
         }
     }
 
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request)
     {
         try {
+            $id = $request->id;
             $user = User::find($id);
 
             if (!$user) {
@@ -92,11 +93,9 @@ class UserController extends Controller
                 'telephone' => 'nullable|string|max:10',
                 'addresse' => 'nullable|string',
                 'country' => 'nullable|string',
-                'role' => 'nullable|string',
-                'image' => 'nullable|mimes:png,jpeg,jpg,webp',
-                'urlLinkedin' => 'nullable|string',
-                'urlTwitter' => 'nullable|string',
-                'urlWebsite' => 'nullable|string',
+
+                'image' => 'nullable|mimes:png,jpeg,jpg,webp'
+
             ]);
 
             $user->update($validatedData);

@@ -11,6 +11,7 @@ function Update({ inputs, title, type }) {
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({});
+  const [placedata, setPlacedata] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,7 +26,7 @@ function Update({ inputs, title, type }) {
     if (id) {
       axios.get(`http://127.0.0.1:8001/api/${type}/${id}`)
         .then(response => {
-          setFormData(response.data.data); // Assuming your response has a 'data' property containing user/employee details
+          setPlacedata(response.data.data); // Assuming your response has a 'data' property containing user/employee details
         })
         .catch(error => console.error('Error fetching data:', error));
     }
@@ -44,7 +45,7 @@ function Update({ inputs, title, type }) {
       let url = '';
       if (type === 'users') {
         url = `http://127.0.0.1:8001/api/updateUser/${id}`;
-      } else if (type === 'employee') {
+      } else if (type === 'employes') {
         url = `http://127.0.0.1:8001/api/updateEmployee/${id}`;
       } else if (type === 'produit') {
         url = `http://127.0.0.1:8001/api/updateProduit/${id}`;
@@ -59,7 +60,6 @@ function Update({ inputs, title, type }) {
       setErrors({});
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
-        // setErrors(error.response.data.errors);
         setErrors(error.response.data.errors);
       } else {
         console.error('Error while sending data:', error);
@@ -107,7 +107,7 @@ function Update({ inputs, title, type }) {
                   <label>{input.label}</label>
                   <input
                     type={input.type}
-                    placeholder={input.placeholder}
+                    placeholder={placedata[input.name]|| ''}
                     name={input.name}
                     value={formData[input.name] || ''}
                     onChange={(e) => handleChange(e, input.name)}

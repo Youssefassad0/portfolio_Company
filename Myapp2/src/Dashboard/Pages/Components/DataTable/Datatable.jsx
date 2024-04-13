@@ -5,113 +5,127 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Datatable = ({ url , titleList }) => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
+const Datatable = ({ url, titleList }) => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(url);
+      setUsers(response.data.users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(url);
-            setUsers(response.data.users);
-        } catch (error) {
-            console.error("Error fetching users:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+  const generateColumns = () => {
+    if (users.length === 0) return [];
 
-    const generateColumns = () => {
-        if (users.length === 0) return [];
-
-        const excludedColumns = ["updated_at", "urlLinkedin","urlTwitter","urlWebsite", "image", "email_verified_at",'date_naissance','adresse','created_at'];
-
-        const generatedColumns = Object.keys(users[0])
-            .filter((key) => !excludedColumns.includes(key))
-            .map((key) => ({
-                field: key,
-                headerName: key.charAt(0).toUpperCase() + key.slice(1),
-                width: 144,
-            }));
-
-        generatedColumns.push({
-            field: "activity",
-            headerName: "Activity",
-            width: 70,
-            cellClassName: "cellWithStatus active",
-            valueGetter: () => "Active",
-        });
-
-        return generatedColumns;
-    };
-
-    const getRowClassName = (params) => {
-        const isAdmin = params.row.role === "admin";
-        return isAdmin ? "admin-row" : "";
-    };
-    const deleteUser = async (userId) => {
-        try {
-            await axios.delete(`http://localhost:8001/api/users/${userId}`);
-            window.location.reload();
-
-        } catch (error) {
-            console.error("Erreur lors de la suppression de l'utilisateur :", error);
-        }
-    };
-
-    const actionColumn = [
-        {
-            field: "action",
-            headerName: "Action",
-            width: 150,
-            renderCell: (params) => (
-                <div className="cellAction">
-                    <Link to={`/Dashboard/users/${params.row.id}`} style={{ textDecoration: "none" }}>
-                        <div className="viewButton" >View</div>
-                    </Link>
-                    <div className="deleteButton" onClick={() =>deleteUser(params.row.id)}>Delete</div>
-                </div>
-            ),
-            key: "action", // Unique key for action column
-        },
+    const excludedColumns = [
+      "updated_at",
+      "urlLinkedin",
+      "urlTwitter",
+      "urlWebsite",
+      "image",
+      "email_verified_at",
+      "date_naissance",
+      "adresse",
+      "created_at",
     ];
-    
-    
-    return (
-        <div className="datatable">
-            {loading ? (
-                <div className="loader">
-                    Loading
-                    <span></span>
-                </div>
-            ) : (
-                <>
-                    <div className="datatableTitle">
-                    {
-                        titleList
-                    } 
 
-                        <Link to="/dashboard/users/new" className="link"> {/* Added leading slash */}
-                            Add New
-                        </Link>
-                    </div>
-                    <DataGrid
-                        className="datagrid"
-                        rows={users}
-                        columns={generateColumns().concat(actionColumn)}
-                        pageSize={9}
-                        rowsPerPageOptions={[9]}
-                        checkboxSelection
-                        getRowClassName={getRowClassName}
-                    />
-                </>
-            )}
+    const generatedColumns = Object.keys(users[0])
+      .filter((key) => !excludedColumns.includes(key))
+      .map((key) => ({
+        field: key,
+        headerName: key.charAt(0).toUpperCase() + key.slice(1),
+        width: 144,
+      }));
+
+    generatedColumns.push({
+      field: "activity",
+      headerName: "Activity",
+      width: 70,
+      cellClassName: "cellWithStatus active",
+      valueGetter: () => "Active",
+    });
+
+    return generatedColumns;
+  };
+
+  const getRowClassName = (params) => {
+    const isAdmin = params.row.role === "admin";
+    return isAdmin ? "admin-row" : "";
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      await axios.delete(`http://localhost:8001/api/users/${userId}`);
+      window.location.reload();
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'utilisateur :", error);
+    }
+  };
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 150,
+      renderCell: (params) => (
+        <div className="cellAction">
+          <Link
+            to={`/Dashboard/users/${params.row.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <div className="viewButton">View</div>
+          </Link>
+          <div
+            className="deleteButton"
+            onClick={() => deleteUser(params.row.id)}
+          >
+            Delete
+          </div>
         </div>
-    );
+      ),
+      key: "action", // Unique key for action column
+    },
+  ];
+
+  return (
+    <div className="datatable">
+      {loading ? (
+        <div className="loader">
+          Loading<span></span>
+        </div>
+      ) : (
+        <>
+          <div className="datatableTitle">{titleList}
+            <Link
+              to="/dashboard/users/new"
+              className="link"
+            >
+              Add New
+            </Link>
+          </div>
+          <DataGrid
+            className="datagrid"
+            rows={users}
+            columns={generateColumns().concat(actionColumn)}
+            pageSize={9}
+            rowsPerPageOptions={[9]}
+            checkboxSelection
+            getRowClassName={getRowClassName}
+          />
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Datatable;
