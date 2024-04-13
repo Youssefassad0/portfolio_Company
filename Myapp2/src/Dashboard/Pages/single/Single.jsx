@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './Single.scss';
 import SideBar from '../Components/SideBar/SideBar';
 import NavBar from '../Components/NavBar/NavBar';
@@ -50,7 +50,9 @@ function Single({ entityType }) {
         <NavBar userInfo={userInfo} />
         <div className="user-top">
           <div className="user-left">
-            <div className="editButton">Edit</div>
+            <div className="editButton">
+              <Link to={`/dashboard/users/edit/${id}`}>Edit</Link>
+            </div>
             <h1 className="user-title">Informations</h1>
             <div className="user-item">
               <img src={entityData ? `http://127.0.0.1:8001/${entityData.image}` : null} alt="profile" className="itemImg" />

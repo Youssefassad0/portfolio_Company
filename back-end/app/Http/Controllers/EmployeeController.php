@@ -78,4 +78,7 @@ class EmployeeController extends Controller
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
         }
     }
+    public function updateEmployee(Request $request)
+    {
+    }
 }

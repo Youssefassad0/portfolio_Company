@@ -11,7 +11,7 @@ const ProfileSettings = () => {
     const urlImg = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
     const userInfo = JSON.parse(localStorage.getItem('user-info'));
     const navigate = useNavigate();
-    const { id } = useParams();
+    const  id  = userInfo.user.id;
     const [user, setUser] = useState({
         name: '',
         email: '',
@@ -26,7 +26,7 @@ const ProfileSettings = () => {
 
     const fetchData = async () => {
         const response = await axios.get('http://127.0.0.1:8001/api/users/' + id)
-        setUser(response.data.user);
+        setUser(response.data.data);
     }
 
     useEffect(() => {
@@ -38,10 +38,11 @@ const ProfileSettings = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        const imageUrl = URL.createObjectURL(file);  
-        setImageUrl(imageUrl); 
-        setFile(file); };
-    
+        const imageUrl = URL.createObjectURL(file);
+        setImageUrl(imageUrl);
+        setFile(file);
+    };
+
 
     const updateUserProfile = async () => {
         try {
@@ -78,9 +79,10 @@ const ProfileSettings = () => {
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5">
                             <label className="profile-img-container" htmlFor="file" id="imgProfile" >
-                                <img className="rounded-circle mt-5" width="150px" src={imageUrl || (user.image ? `http://localhost:8001/${user.image}` : urlImg)} alt="Profile" />
+                                <img className="rounded-circle mt-5" width="150px" src={imageUrl || (user && user.image ? `http://localhost:8001/${user.image}` : urlImg)}
+                                    alt="Profile" />
                                 <FaCamera className="camera-icon" />
-                            <input type="file" name='image' id="file" style={{ display: 'none' }} onChange={handleFileChange} />
+                                <input type="file" name='image' id="file" style={{ display: 'none' }} onChange={handleFileChange} />
                             </label>
                             <span className="font-weight-bold">{user.name}</span>
                             <span className="text-black-50">{user.email}</span>
@@ -110,7 +112,7 @@ const ProfileSettings = () => {
                                     <label className="labels">phone Number</label>
                                     <input required type="text" className="form-control" placeholder='your phone' name="telephone" value={user.telephone} onChange={(e) => setUser({ ...user, telephone: e.target.value })} />
                                 </div>
-                            </div> 
+                            </div>
                             <div className="row mt-2">
                                 <div className="col-md-6">
                                     <label className="labels">Adress</label>

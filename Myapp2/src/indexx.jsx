@@ -17,10 +17,10 @@ import { useContext } from "react";
 import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
 import Employes from "./Dashboard/Pages/Employes/Employes";
 import Profile from "./components/Profile/Profile";
+import Edit from "./Dashboard/Pages/Edit/Edit";
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
   const urlUsers = "http://127.0.0.1:8001/api/users";
-  const urlEmployes = "http://127.0.0.1:8001/api/employes";
   return (
     <div className={darkMode ? "dash dark" : "dash"}>
       <BrowserRouter>
@@ -31,18 +31,20 @@ function Appi() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" >
             <Route index element={<Home />} />
             <Route path="users" >
               <Route index element={<List url={urlUsers} titleList="Add New User" />} />
               <Route path=":id" element={<Single entityType="user" />} />
-              <Route path="new" element={<New inputs={userInputs} type="user" title="Add New User" />} />
+              <Route path="edit/:id" element={<Edit entityType="user" inputs={userInputs} type="users" title="Edit User" />} />
+              <Route path="new" element={<New inputs={userInputs} type="users" title="Add New User" />} />
             </Route>
             <Route path="employes" >
               <Route index element={<Employes/>} />
               <Route path=":id" element={<Single entityType="employee" />} />
-              <Route path="new" element={<New inputs={employeInputs} type="employe" title="Add New Employe" />} />
+              <Route path="edit/:id" element={<Edit entityType="employee" inputs={employeInputs} type="emploee" title="Edit Employee" />} />
+              <Route path="new" element={<New inputs={employeInputs} type="employes" title="Add New Employe" />} />
             </Route>
             <Route path="products" >
               <Route index element={<List />} />

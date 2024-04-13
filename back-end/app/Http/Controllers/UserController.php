@@ -70,7 +70,7 @@ class UserController extends Controller
             $user->save();
 
             // Return user object with image path in the response
-            return response()->json(['user' => $user, "message" => "added with success ! "], 200);
+            return response()->json(['user' => $user, "message" => "added with success ! "], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
         }
@@ -78,30 +78,35 @@ class UserController extends Controller
 
     public function updateUser(Request $request, $id)
     {
-        $user = User::find($id);
+        try {
+            $user = User::find($id);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            if (!$user) {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'password' => 'nullable|string|min:4',
+                'telephone' => 'nullable|string|max:10',
+                'addresse' => 'nullable|string',
+                'country' => 'nullable|string',
+                'role' => 'nullable|string',
+                'image' => 'nullable|mimes:png,jpeg,jpg,webp',
+                'urlLinkedin' => 'nullable|string',
+                'urlTwitter' => 'nullable|string',
+                'urlWebsite' => 'nullable|string',
+            ]);
+
+            $user->update($validatedData);
+
+            return response()->json(['message' => 'User updated successfully', 'data' => $user], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'nullable|string|min:4',
-            'telephone' => 'nullable|numeric|max:10|min:8',
-            'addresse' => 'nullable|string',
-            'country' => 'nullable|string',
-            'role' => 'nullable|string',
-            'image' => 'nullable|mimes:png,jpeg,jpg,webp',
-            'urlLinkedin' => 'nullable|string',
-            'urlTwitter' => 'nullable|string',
-            'urlWebsite' => 'nullable|string',
-        ]);
-
-        $user->update($validatedData);
-
-        return response()->json(['message' => 'User updated successfully', 'user' => $user], 200);
     }
+
 
     public function deleteUser($id)
     {

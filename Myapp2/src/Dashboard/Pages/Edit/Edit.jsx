@@ -1,24 +1,36 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import  { useEffect, useState } from 'react';
-import './New.scss';
+import { useEffect, useState } from 'react';
+import './Edit.scss';
 import SideBar from '../Components/SideBar/SideBar';
 import axios from 'axios';
 import NavBar from '../Components/NavBar/NavBar';
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function New({ inputs, title, type }) {
+function Update({ inputs, title, type }) {
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
     }
   }, [navigate, userInfo]);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://127.0.0.1:8001/api/${type}/${id}`)
+        .then(response => {
+          setFormData(response.data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  }, [id, type]);
 
   const handleChange = (e, name) => {
     const value = e.target.value;
@@ -28,35 +40,24 @@ function New({ inputs, title, type }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formDataWithFile = new FormData();
-    formDataWithFile.append('image', file);
-
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataWithFile.append(key, value);
-    });
-
+  const handleUpdate = async () => {
     try {
       let url = '';
       if (type === 'users') {
-        url = 'http://127.0.0.1:8001/api/addUser';
-      } else if (type === 'employes') {
-        url = 'http://127.0.0.1:8001/api/addEmploye';
-      } else if (type === 'produits') {
-        url = 'http://127.0.0.1:8001/api/addProduit';
+        url = `http://127.0.0.1:8001/api/updateUser/${id}`;
+      } else if (type === 'employee') {
+        url = `http://127.0.0.1:8001/api/updateEmployee/${id}`;
+      } else if (type === 'produit') {
+        url = `http://127.0.0.1:8001/api/updateProduit/${id}`;
       }
-
-      const response = await axios.post(url, formDataWithFile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
+      const formDataWithFile = new FormData();
+      formDataWithFile.append('image', file);
+      for (const key in formData) {
+        formDataWithFile.append(key, formData[key]);
+      }
+      const response = await axios.put(url, formDataWithFile);
       console.log(response.data);
       setErrors({});
-      // Do something with the response, e.g., redirect the user.
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
@@ -64,6 +65,11 @@ function New({ inputs, title, type }) {
         console.error('Error while sending data:', error);
       }
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleUpdate();
   };
 
   return (
@@ -110,7 +116,7 @@ function New({ inputs, title, type }) {
                 </div>
               ))}
 
-              <button type="submit">Send</button>
+              <button type="submit">Update</button>
             </form>
           </div>
         </div>
@@ -119,4 +125,4 @@ function New({ inputs, title, type }) {
   );
 }
 
-export default New;
+export default Update;
