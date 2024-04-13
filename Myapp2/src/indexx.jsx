@@ -43,7 +43,7 @@ function Appi() {
             <Route path="employes" >
               <Route index element={<Employes/>} />
               <Route path=":id" element={<Single entityType="employee" />} />
-              <Route path="edit/:id" element={<Edit entityType="employee" inputs={employeInputs} type="emploee" title="Edit Employee" />} />
+              <Route path="edit/:id" element={<Edit entityType="employee" inputs={employeInputs} type="employes" title="Edit Employee" />} />
               <Route path="new" element={<New inputs={employeInputs} type="employes" title="Add New Employe" />} />
             </Route>
             <Route path="products" >

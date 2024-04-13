@@ -12,8 +12,9 @@ function New({ inputs, title, type }) {
   const [file, setFile] = useState("");
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [message, setMessage] = useState(null);
 
+  const navigate = useNavigate();
   useEffect(() => {
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
@@ -55,10 +56,16 @@ function New({ inputs, title, type }) {
       });
 
       console.log(response.data);
+      setMessage(response.data.message);
+      setTimeout(() => {
+        setMessage(null);
+        navigate('/dashboard/users')
+    }, 1000);
       setErrors({});
       // Do something with the response, e.g., redirect the user.
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
+        // setErrors(error.response.data.errors);
         setErrors(error.response.data.errors);
       } else {
         console.error('Error while sending data:', error);
@@ -74,6 +81,11 @@ function New({ inputs, title, type }) {
         <div className="top">
           <h1>{title}</h1>
         </div>
+        {message && (
+                        <div className="alert alert-success">
+                            {message}
+                        </div>
+                    )}
         <div className="bottom">
           <div className="left">
             <img
@@ -82,7 +94,7 @@ function New({ inputs, title, type }) {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} method='post' >
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon-image" />
@@ -95,7 +107,6 @@ function New({ inputs, title, type }) {
                   style={{ display: "none" }}
                 />
               </div>
-
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>

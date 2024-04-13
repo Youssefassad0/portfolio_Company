@@ -32,7 +32,7 @@ function Widget({ type, length }) {
                 title: 'Products',
                 isMoney: true,
                 mount: 100,
-
+                url:'/dashboard/employes',
                 link: "View all products",
                 icon: (
                     <Inventory2Icon className='w-icon'
@@ -48,6 +48,7 @@ function Widget({ type, length }) {
                 title: 'Employes',
                 isMoney: false,
                 mount: length,
+                url:'/dashboard/employes',
 
                 link: "See all Employes ",
                 icon: (

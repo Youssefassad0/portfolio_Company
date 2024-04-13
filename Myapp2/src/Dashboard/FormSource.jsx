@@ -101,7 +101,7 @@ export const employeInputs = [
     {
         id: 4,
         label: "Address",
-        name: "adresse",
+        name: "addresse",
         type: "text",
         placeholder: "Elton St. 216 NewYork",
     }, {

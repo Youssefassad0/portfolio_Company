@@ -37,7 +37,7 @@ class EmployeeController extends Controller
                 'nom' => 'required|string',
                 'prenom' => 'required|string', // removed extra comma
                 'date_naissance' => 'required|date',
-                'adresse' => 'nullable|string', // corrected field name
+                'addresse' => 'nullable|string',
                 'telephone' => 'nullable|string|max:10',
                 'email' => 'required|email|unique:employes,email',
                 'date_embauche' => 'required|date',
@@ -65,7 +65,7 @@ class EmployeeController extends Controller
             $employe->nom = $request->input('nom');
             $employe->prenom = $request->input('prenom');
             $employe->date_naissance = $request->input('date_naissance');
-            $employe->adresse = $request->input('adresse');
+            $employe->addresse = $request->input('addresse');
             $employe->telephone = $request->input('telephone');
             $employe->email = $request->input('email');
             $employe->date_embauche = $request->input('date_embauche');

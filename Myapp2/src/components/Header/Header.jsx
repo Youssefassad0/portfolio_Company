@@ -1,39 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-// import 'bootstrap/dist/css/bootstrap.min.css';
-
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiMenuAltRight } from 'react-icons/bi';
-import { Dropdown, Nav, NavDropdown } from "react-bootstrap";
-
-// import {FaA} from 'react-icons/fa'
-import './Header.css';
-import '../../index.css';
-
+import { Dropdown, Nav, NavDropdown } from 'react-bootstrap';
 import OutsideClickHandler from 'react-outside-click-handler';
-// import Contact from '../Contact/Contact';
+import './Header.css';
 
 function Header() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user-info'));
-  // console.log(user.user.image);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOption, setMenuOption] = useState(false);
 
-  function Logout() {
+  function logout() {
     localStorage.clear();
     navigate('/');
   }
 
-  const getMenuStyles = (menu) => {
-    if (document.documentElement.clientWidth <= 800) {
-      return {
-        right: menu ? '0' : '-100%'
-      };
-    } else {
-      return {};
-    }
+  const getMenuStyles = () => {
+    return document.documentElement.clientWidth <= 800 ? { right: menuOption ? '0' : '-100%' } : {};
   };
 
   useEffect(() => {
@@ -57,30 +43,23 @@ function Header() {
           <img src="images/cristal-inox.png" width={130} alt="" />
         </Link>
         <OutsideClickHandler onOutsideClick={() => setMenuOption(false)}>
-          <div className={`flexCenter h-menu ${isScrolled ? 'fade-in' : ''}`} style={getMenuStyles(menuOption)}>
-            <Link to={'/'}>Home</Link>
+          <div className={`flexCenter h-menu ${isScrolled ? 'fade-in' : ''}`} style={getMenuStyles()}>
+            <Link to="/">Home</Link>
             <Link to="/services">Services</Link>
             <Link to="/products">Products</Link>
             <Link to="/contact">Contact</Link>
-            {localStorage.getItem('user-info') ? (
+            {user ? (
               <Nav>
-                <NavDropdown alignRight title={
-                  user.user.image ? (
-                    <img src={`http://localhost:8001/${user.user.image}`} alt='Profile' className='profile-image' onClick={() => setMenuOption(true)} />
-                  ) : (
-                    <span>{user.user.name}</span>
-                  )
-                }>
-                  <Dropdown.Item> <Link style={{ textDecoration:'none' }} to={`/profile`}>
-                  Your Profile  </Link> </Dropdown.Item>
-                  {user.user.role === 'admin' && (
-                    <Dropdown.Item><Link to="/dashboard" style={{ textDecoration:'none' }}  >Dashboard</Link></Dropdown.Item>
-                  )}
-                  <Dropdown.Item onClick={Logout}>Logout</Dropdown.Item>
+                <NavDropdown alignRight title={user.user.image ? <img src={`http://localhost:8001/${user.user.image}`} alt="Profile" className="profile-image" onClick={() => setMenuOption(true)} /> : <span>{user.user.name}</span>}>
+                  <Dropdown.Item>
+                    <Link to="/profile">Your Profile</Link>
+                  </Dropdown.Item>
+                  {user.user.role === 'admin' && <Dropdown.Item><Link to="/dashboard">Dashboard</Link></Dropdown.Item>}
+                  <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
                 </NavDropdown>
               </Nav>
             ) : (
-              <Link to='/login' className='button'>Sign In</Link>
+              <Link to="/login" className="button">Sign In</Link>
             )}
           </div>
           <div className="menu-icon" onClick={() => setMenuOption(prev => !prev)}>

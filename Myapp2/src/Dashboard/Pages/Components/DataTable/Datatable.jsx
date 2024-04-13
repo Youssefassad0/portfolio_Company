@@ -28,14 +28,14 @@ const Datatable = ({ url , titleList }) => {
     const generateColumns = () => {
         if (users.length === 0) return [];
 
-        const excludedColumns = ["updated_at", "urlLinkedin","urlTwitter","urlWebsite", "image", "email_verified_at",'date_naissance','adresse','email','created_at'];
+        const excludedColumns = ["updated_at", "urlLinkedin","urlTwitter","urlWebsite", "image", "email_verified_at",'date_naissance','adresse','created_at'];
 
         const generatedColumns = Object.keys(users[0])
             .filter((key) => !excludedColumns.includes(key))
             .map((key) => ({
                 field: key,
                 headerName: key.charAt(0).toUpperCase() + key.slice(1),
-                width: 160,
+                width: 144,
             }));
 
         generatedColumns.push({
@@ -56,6 +56,8 @@ const Datatable = ({ url , titleList }) => {
     const deleteUser = async (userId) => {
         try {
             await axios.delete(`http://localhost:8001/api/users/${userId}`);
+            window.location.reload();
+
         } catch (error) {
             console.error("Erreur lors de la suppression de l'utilisateur :", error);
         }

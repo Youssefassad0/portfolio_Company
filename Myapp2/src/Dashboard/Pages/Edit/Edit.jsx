@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import './Edit.scss';
@@ -26,7 +25,7 @@ function Update({ inputs, title, type }) {
     if (id) {
       axios.get(`http://127.0.0.1:8001/api/${type}/${id}`)
         .then(response => {
-          setFormData(response.data);
+          setFormData(response.data.data); // Assuming your response has a 'data' property containing user/employee details
         })
         .catch(error => console.error('Error fetching data:', error));
     }
@@ -60,6 +59,7 @@ function Update({ inputs, title, type }) {
       setErrors({});
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
+        // setErrors(error.response.data.errors);
         setErrors(error.response.data.errors);
       } else {
         console.error('Error while sending data:', error);

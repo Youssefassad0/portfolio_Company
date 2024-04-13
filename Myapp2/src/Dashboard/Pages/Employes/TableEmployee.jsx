@@ -81,9 +81,11 @@ function TableEmployee() {
                                     <td>{employe.prenom}</td>
                                     <td>{employe.telephone}</td>
                                     <td>{employe.salaire}</td>
-                                    <td>{employe.adresse}</td>
+                                    <td>{employe.addresse}</td>
                                     <td className="action-btns">
-                                        <button className="button"><span className="button_top edit">Edit</span></button>
+                                        <button className="button"><span className="button_top edit">
+                                        <Link to={`/Dashboard/employes/edit/${employe.id}`}>Edit</Link>
+                                            </span></button>
                                         <button className="button"><span className="button_top view">
                                             <Link to={`/Dashboard/employes/${employe.id}`}>View</Link>
                                         </span></button>
