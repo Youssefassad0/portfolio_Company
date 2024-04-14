@@ -73,4 +73,28 @@ class AuthController extends Controller
             return response()->json(['error' => 'Email or password is incorrect.'], 401);
         }
     }
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // Update user information
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password'); // You might want to hash the password before saving
+        $user->telephone = $request->input('telephone');
+        $user->addresse = $request->input('addresse');
+        $user->country = $request->input('country');
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Store the uploaded file
+            $imagePath = $request->file('image')->store('images');
+            // Update user image path
+            $user->image = $imagePath;
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'User profile updated successfully']);
+    }
 }
