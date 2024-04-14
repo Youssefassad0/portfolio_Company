@@ -45,16 +45,18 @@ function SideBar() {
                         <SiHomeassistantcommunitystore id="icon" />
                         <span>Products</span>
                     </li>
-                    <Link to="/dashboard/employes"  style={{ textDecoration: "none" }} >
+                    <Link to="/dashboard/employes" style={{ textDecoration: "none" }} >
                         <li>
                             <BadgeIcon id="icon" />
                             <span>Employees</span>
                         </li>
                     </Link>
-                    <li>
-                        <LocalShippingIcon id="icon" />
-                        <span>Category</span>
-                    </li>
+                    <Link to="/dashboard/categories" >
+                        <li>
+                            <LocalShippingIcon id="icon" />
+                            <span>Category</span>
+                        </li>
+                    </Link>
                     <li>
                         <IoSettingsSharp id="icon" />
                         <span>Settings</span>

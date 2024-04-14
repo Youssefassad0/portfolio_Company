@@ -18,6 +18,9 @@ import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
 import Employes from "./Dashboard/Pages/Employes/Employes";
 import Profile from "./components/Profile/Profile";
 import Edit from "./Dashboard/Pages/Edit/Edit";
+import Category from "./Dashboard/Pages/Category/Category";
+import AddCategory from "./Dashboard/Pages/Category/AddCategory";
+
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
   const urlUsers = "http://127.0.0.1:8001/api/users";
@@ -50,6 +53,11 @@ function Appi() {
               <Route index element={<List />} />
               <Route path=":id" element={<Single entityType="product" />} />
               <Route path="new" element={<New inputs={productInputs} type="produit" title="Add New Product" />} />
+            </Route>
+            <Route path="categories" >
+              <Route index element={<Category />} />
+              <Route path=":id" element={<Single entityType="product" />} />
+              <Route path="new" element={<AddCategory/> }/>
             </Route>
           </Route>
         </Routes>

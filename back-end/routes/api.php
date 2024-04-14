@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -39,3 +40,8 @@ Route::get('/employes/{id}', [EmployeeController::class, 'listEmploye']);
 Route::get('/employes', [EmployeeController::class, 'listEmployes']);
 Route::post('/addEmploye', [EmployeeController::class, 'addEmploye']);
 Route::post('/updateemployes/{id}', [EmployeeController::class, 'updateEmploye']);
+
+
+// add    Category 
+Route::post('/addCategory', [CategoryController::class, 'addCategory']);
+Route::get('/listCategory', [CategoryController::class, 'listCategory']);
