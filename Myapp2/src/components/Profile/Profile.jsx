@@ -15,11 +15,12 @@ const ProfileSettings = () => {
     const userInfo = JSON.parse(localStorage.getItem("user-info"));
     const navigate = useNavigate();
     const id = userInfo.user.id;
+    const [imageUrl, setImageUrl] = useState(null);
+    const [message, setMessage] = useState('');
     const [errors, setErrors] = useState([]);
     const [user, setUser] = useState({
         name: "",
         email: "",
-        password: "",
         telephone: "",
         addresse: "",
         country: "",
@@ -52,6 +53,7 @@ const ProfileSettings = () => {
 
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] }); // Adjusted to set the file directly
+        setImageUrl(URL.createObjectURL(e.target.files[0]));
     };
 
     const updateUser = (e) => {
@@ -60,7 +62,7 @@ const ProfileSettings = () => {
         formData.append('image', picture.image);
         formData.append("name", user.name);
         formData.append("email", user.email);
-        formData.append("password", user.password);
+
         formData.append("telephone", user.telephone);
         formData.append("addresse", user.addresse);
         formData.append("country", user.country);
@@ -69,6 +71,8 @@ const ProfileSettings = () => {
         formData.append("urlWebsite", user.urlWebsite);
         axios.post(`http://127.0.0.1:8001/api/update-User/${id}`, formData).then(res => {
             console.log(res.data);
+            setMessage(res.data.message)
+            swal(message, message, 'success');
             setErrors([]);
         }).catch(err => {
             if (err.response && err.response.data && err.response.data.errors) {
@@ -102,7 +106,12 @@ const ProfileSettings = () => {
                                     className="rounded-circle mt-5"
                                     width="150px"
                                     alt="Profile"
-
+                                    src={
+                                        imageUrl ||
+                                        (user && user.image
+                                            ? `http://localhost:8001/${user.image}`
+                                            : urlImg)
+                                    }
                                 />
 
                                 <FaCamera className="camera-icon" />
@@ -163,23 +172,6 @@ const ProfileSettings = () => {
                                 </div>
                             </div>
                             <div className="row mt-2">
-                                <div className="col-md-6">
-                                    <label className="labels">Change Password</label>
-                                    <input
-                                        required
-                                        type="password"
-                                        className="form-control"
-                                        placeholder="New password"
-                                        name="password"
-                                        onChange={handleInput}
-                                        value={user.password}
-                                    />
-                                    {
-                                        errors.password && (
-                                            <small className="text-danger" >{errors.password}</small>
-                                        )
-                                    }
-                                </div>
                                 <div className="col-md-6">
                                     <label className="labels">phone Number</label>
                                     <input

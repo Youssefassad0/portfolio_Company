@@ -25,7 +25,10 @@ class User extends Authenticatable
         'addresse',
         'image',
         'telephone',
-        'country'
+        'country',
+        'urlLinkedin',
+        'urlTwitter',
+        'urlWebsite'
     ];
 
     /**

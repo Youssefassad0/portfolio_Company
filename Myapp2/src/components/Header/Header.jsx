@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiMenuAltRight } from 'react-icons/bi';
 import { Dropdown, Nav, NavDropdown } from 'react-bootstrap';
+import axios from 'axios';
 import OutsideClickHandler from 'react-outside-click-handler';
 import './Header.css';
 
@@ -13,6 +14,13 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOption, setMenuOption] = useState(false);
 
+  const [userinfo,setUserinfo]=useState({});
+useEffect(()=>{
+  user && 
+  axios.get(`http://localhost:8001/api/users/${user.user.id}`).then(res=>{
+  setUserinfo(res.data.data);
+  })
+},[])
   function logout() {
     localStorage.clear();
     navigate('/');
@@ -50,7 +58,7 @@ function Header() {
             <Link to="/contact">Contact</Link>
             {user ? (
               <Nav>
-                <NavDropdown alignRight title={user.user.image ? <img src={`http://localhost:8001/${user.user.image}`} alt="Profile" className="profile-image" onClick={() => setMenuOption(true)} /> : <span>{user.user.name}</span>}>
+                <NavDropdown alignRight title={userinfo.image ? <img src={`http://localhost:8001/${userinfo.image}`} alt="Profile" className="profile-image" onClick={() => setMenuOption(true)} /> : <span>{user.user.name}</span>}>
                   <Dropdown.Item>
                     <Link to="/profile">Your Profile</Link>
                   </Dropdown.Item>
