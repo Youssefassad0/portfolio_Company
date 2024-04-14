@@ -11,13 +11,14 @@ import swal from "sweetalert";
 
 const ProfileSettings = () => {
     const urlImg =
-        "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
+    "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg";
     const userInfo = JSON.parse(localStorage.getItem("user-info"));
     const navigate = useNavigate();
     const id = userInfo.user.id;
     const [imageUrl, setImageUrl] = useState(null);
     const [message, setMessage] = useState('');
     const [errors, setErrors] = useState([]);
+    const [picture, setPicture] = useState([]);
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -44,7 +45,6 @@ const ProfileSettings = () => {
             navigate('/');
         }
     };
-    const [picture, setPicture] = useState([]);
 
     const handleInput = (e) => {
         e.persist();
@@ -52,7 +52,7 @@ const ProfileSettings = () => {
     };
 
     const handleImage = (e) => {
-        setPicture({ image: e.target.files[0] }); // Adjusted to set the file directly
+        setPicture({ image: e.target.files[0] }); 
         setImageUrl(URL.createObjectURL(e.target.files[0]));
     };
 

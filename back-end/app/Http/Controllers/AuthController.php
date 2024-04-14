@@ -122,7 +122,7 @@ class AuthController extends Controller
                     // Save user to the database
                     $user->update();
 
-                    return response()->json(['data' => $user, 'message' => 'User Updated successfully.'], 201);
+                    return response()->json(['data' => $user, 'message' => 'User Updated successfully.'], 200);
                 }
             }
         } catch (\Exception $e) {

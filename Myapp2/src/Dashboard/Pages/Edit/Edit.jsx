@@ -7,15 +7,17 @@ import SideBar from '../Components/SideBar/SideBar';
 import NavBar from '../Components/NavBar/NavBar';
 import { useNavigate, useParams } from 'react-router-dom';
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import swal from 'sweetalert';
 
 function Update({ type, inputs, title }) {
+  const imgIcon = "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg";
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
-  const [file, setFile] = useState(null); // Added state for file
+  const [picture, setPicture] = useState([]);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
 
@@ -32,6 +34,7 @@ function Update({ type, inputs, title }) {
         setFormData(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        swal('error', error.data.message, 'error')
       }
     };
     fetchData();
@@ -45,11 +48,15 @@ function Update({ type, inputs, title }) {
     }));
   };
 
+  const handleImage = (e) => {
+    setPicture({ image: e.target.files[0] });
+    setImageUrl(URL.createObjectURL(e.target.files[0]));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://127.0.0.1:8001/api/update${type}/${id}`, formData);
+      const response = await axios.post(`http://127.0.0.1:8001/api/update${type}/${id}`, formData);
       console.log(response.data);
       setMessage(response.data.message);
       setErrors({});
@@ -71,7 +78,7 @@ function Update({ type, inputs, title }) {
           <h1>{title}</h1>
         </div>
         {
-          message && 
+          message &&
           <div className="alert alert-success">
             {message}
           </div>
@@ -79,8 +86,15 @@ function Update({ type, inputs, title }) {
         <div className="bottom">
           <div className="left">
             <img
-              src={file ? URL.createObjectURL(file) : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"}
-              alt=""
+              className="rounded-circle mt-5"
+              width="150px"
+              alt="Profile"
+              src={
+                imageUrl ||
+                (formData && formData.image
+                  ? `http://localhost:8001/${formData.image}`
+                  : imgIcon)
+              }
             />
           </div>
           <div className="right">
@@ -91,10 +105,10 @@ function Update({ type, inputs, title }) {
                 </label>
                 <input
                   type="file"
+                  name="image"
                   id="file"
-                  name='image'
-                  onChange={(e) => setFile(e.target.files[0])} // Added onChange handler for file input
                   style={{ display: "none" }}
+                  onChange={handleImage}
                 />
               </div>
               {inputs.map((input) => (

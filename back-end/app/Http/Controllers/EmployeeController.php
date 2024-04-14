@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -94,44 +95,34 @@ class EmployeeController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
+                return response()->json(['errors' => $validator->messages()], 422);
             }
 
-            $employe = Employe::findOrFail($id);
-
-            $imagePath = $employe->image; // Preserve the existing image path
+            $employe = Employe::find($id);
+            if (!$employe) {
+                return response()->json([
+                    'message' => 'Employee Not Found!'
+                ], 404);
+            }
 
             if ($request->hasFile('image')) {
-                // Delete the existing image if exists
-                if ($employe->image) {
-                    Storage::delete($employe->image);
+                $path = $employe->image;
+                if (File::exists($path)) {
+                    File::delete($path);
                 }
-
-                $file = $request->file('image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $path = 'uploads/employes';
-                $file->move($path, $fileName);
-
-                // Set new image path
-                $imagePath = $path . '/' . $fileName;
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $imagePath = 'uploads/employes';
+                $image->move($imagePath, $imageName);
+                $employe->image = $imagePath . '/' . $imageName;
             }
 
-            // Update employee data
-            $employe->update([
-                'nom' => $request->input('nom'),
-                'prenom' => $request->input('prenom'),
-                'date_naissance' => $request->input('date_naissance'),
-                'addresse' => $request->input('addresse'),
-                'telephone' => $request->input('telephone'),
-                'email' => $request->input('email'),
-                'date_embauche' => $request->input('date_embauche'),
-                'salaire' => $request->input('salaire'),
-                'image' => $imagePath,
-            ]);
+            $employe->fill($request->all());
+            $employe->save();
 
             return response()->json(['data' => $employe, 'message' => 'Employee updated successfully!'], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 }
