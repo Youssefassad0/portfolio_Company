@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Employe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -76,36 +77,55 @@ class UserController extends Controller
         }
     }
 
-    public function updateUser(Request $request)
+    public function updateUser(Request $request, $id)
     {
         try {
-            $id = $request->id;
-            $user = User::find($id);
-
-            if (!$user) {
-                return response()->json(['error' => 'User not found'], 404);
-            }
-
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $id,
-                'password' => 'nullable|string|min:4',
-                'telephone' => 'nullable|string|max:10',
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string',
                 'addresse' => 'nullable|string',
                 'country' => 'nullable|string',
-
-                'image' => 'nullable|mimes:png,jpeg,jpg,webp'
-
+                'telephone' => 'nullable|numeric|max:10',
+                'password' => 'nullable|min:4',
+                'email' => 'required|email|unique:employes,email,' . $id,
             ]);
 
-            $user->update($validatedData);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+            $user = User::findOrFail($id);
 
-            return response()->json(['message' => 'User updated successfully', 'data' => $user], 200);
+            $imagePath = $user->image; // Preserve the existing image path
+
+            if ($request->hasFile('image')) {
+                // Delete the existing image if exists
+                if ($user->image) {
+                    Storage::delete($user->image);
+                }
+
+                $file = $request->file('image');
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $path = 'uploads/employes';
+                $file->move($path, $fileName);
+
+                // Set new image path
+                $imagePath = $path . '/' . $fileName;
+            }
+
+            // Update employee data
+            $user->update([
+                'name' => $request->input('name'),
+                'addresse' => $request->input('addresse'),
+                'telephone' => $request->input('telephone'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'country' => $request->input('country'),
+            ]);
+
+            return response()->json(['data' => $user, 'message' => 'User updated successfully!'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 
     public function deleteUser($id)
     {

@@ -77,7 +77,7 @@ function New({ inputs, title, type }) {
     <div className="new">
       <SideBar />
       <div className="newContainer">
-        <NavBar />
+        <NavBar userInfo={userInfo}/>
         <div className="top">
           <h1>{title}</h1>
         </div>
