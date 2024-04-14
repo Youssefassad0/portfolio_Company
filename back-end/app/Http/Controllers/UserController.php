@@ -24,11 +24,11 @@ class UserController extends Controller
         if (!$user) {
             return response()->json([
                 'message' => 'User Not Found'
-            ]);
+            ], 404);
         };
         return response()->json([
             'data' => $user
-        ]);
+        ], 200);
     }
     public function addUser(Request $request)
     {
@@ -37,45 +37,50 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'name' => 'required|string',
                 'password' => 'required|min:4',
-                'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048', // Adjusted validation for image upload
-                'telephone' => 'nullable|string|max:10', // Changed to string as telephone might have formatting
-                'addresse' => 'nullable|string', // Corrected field name from 'addresse' to 'address'
+                'telephone' => 'nullable|string|max:14',
+                'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+                'addresse' => 'nullable|string',
                 'country' => 'nullable|string',
+                'urlLinkedin' => 'nullable|string',
+                'urlTwitter' => 'nullable|string',
+                'urlWebsite' => 'nullable|string',
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
+            } else {
+                $user = new User;
+
+                // Handle image upload if provided
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $imageName = time() . '.' . $image->getClientOriginalExtension();
+                    $imagePath = 'uploads/users';
+                    $image->move($imagePath, $imageName);
+                    $user->image = $imagePath . '/' . $imageName;
+                }
+
+                // Set user attributes
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->password = Hash::make($request->input('password'));
+                $user->telephone = $request->input('telephone');
+                $user->addresse = $request->input('addresse');
+                $user->country = $request->input('country');
+                $user->urlLinkedin = $request->input('urlLinkedin');
+                $user->urlTwitter = $request->input('urlTwitter');
+                $user->urlWebsite = $request->input('urlWebsite');
+
+                // Save user to the database
+                $user->save();
+
+                return response()->json(['data' => $user, 'message' => 'User added successfully.'], 201);
             }
-
-            $imagePath = null;
-
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $path = 'uploads/users';
-                $file->move($path, $fileName);
-
-                // Set image path
-                $imagePath = $path . '/' . $fileName;
-            }
-
-            // Create new user instance
-            $user = new User;
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->password = Hash::make($request->input('password'));
-            $user->telephone = $request->input('telephone'); // Changed to 'telephone' to match input name
-            $user->addresse = $request->input('addresse'); // Changed to 'address' to match input name
-            $user->country = $request->input('country');
-            $user->image = $imagePath; // Assign image path
-            $user->save();
-
-            // Return user object with image path in the response
-            return response()->json(['user' => $user, "message" => "added with success ! "], 201);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 
     public function updateUser(Request $request, $id)
     {
@@ -84,7 +89,7 @@ class UserController extends Controller
                 'name' => 'required|string',
                 'addresse' => 'nullable|string',
                 'country' => 'nullable|string',
-                'telephone' => 'nullable|numeric|max:10',
+                'telephone' => 'nullable|string|max:10',
                 'password' => 'nullable|min:4',
                 'email' => 'required|email|unique:employes,email,' . $id,
             ]);

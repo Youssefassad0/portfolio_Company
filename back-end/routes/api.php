@@ -20,14 +20,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Authentification
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::put('/user/{id}', [AuthController::class, 'update']);
+Route::post('/update-User/{id}', [AuthController::class, 'updateUser']);
+
+// add , delete , update , show Users ---> 
+
 Route::get('/users', [UserController::class, 'listUsers']);
 Route::get('/users/{id}', [UserController::class, 'listUser']);
 Route::delete('/users/{id}', [UserController::class, 'deleteUser']);
 Route::post('/addUser', [UserController::class, 'addUser']);
 Route::put('/updateusers/{id}', [UserController::class, 'updateUser']);
+// add , delete , update , show Employes  ---> 
 
 Route::delete('/employes/{id}', [EmployeeController::class, 'deleteEmploye']);
 Route::get('/employes/{id}', [EmployeeController::class, 'listEmploye']);

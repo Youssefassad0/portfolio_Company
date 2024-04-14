@@ -91,7 +91,6 @@ class EmployeeController extends Controller
                 'email' => 'required|email|unique:employes,email,' . $id,
                 'date_embauche' => 'required|date',
                 'salaire' => 'nullable|numeric',
-                'image' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
             ]);
 
             if ($validator->fails()) {

@@ -2,10 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "./Profile.scss";
 import Header from "../Header/Header";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import axios from "axios";
+import swal from "sweetalert";
+// import swal from "sweetalert";
 
 const ProfileSettings = () => {
     const urlImg =
@@ -13,6 +15,7 @@ const ProfileSettings = () => {
     const userInfo = JSON.parse(localStorage.getItem("user-info"));
     const navigate = useNavigate();
     const id = userInfo.user.id;
+    const [errors, setErrors] = useState([]);
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -20,55 +23,65 @@ const ProfileSettings = () => {
         telephone: "",
         addresse: "",
         country: "",
-        image: "",
+        urlLinkedin: "",
+        urlTwitter: "",
+        urlWebsite: "",
     });
-    const [file, setFile] = useState(null); // State to store the file
-    const [imageUrl, setImageUrl] = useState(null); // State to store the image URL
-
-    const fetchData = async () => {
-        const response = await axios.get("http://127.0.0.1:8001/api/users/" + id);
-        setUser(response.data.data);
-    };
-
     useEffect(() => {
         if (!userInfo) {
             navigate("/");
+        } else {
+            fetchData();
         }
-        fetchData();
     }, [id]);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get("http://127.0.0.1:8001/api/users/" + id);
+            setUser(response.data.data);
+        } catch (err) {
+            console.error("Error fetching user data:", err);
+            navigate('/');
+        }
+    };
+    const [picture, setPicture] = useState([]);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-        setImageUrl(URL.createObjectURL(e.target.files[0]));
+    const handleInput = (e) => {
+        e.persist();
+        setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const updateUserProfile = async () => {
-        try {
-            const formData = new FormData();
-            formData.append("name", user.name);
-            formData.append("email", user.email);
-            formData.append("password", user.password);
-            formData.append("telephone", user.telephone);
-            formData.append("addresse", user.addresse);
-            formData.append("country", user.country);
-            if (file) {
-                formData.append("image", file);
+    const handleImage = (e) => {
+        setPicture({ image: e.target.files[0] }); // Adjusted to set the file directly
+    };
+
+    const updateUser = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', picture.image);
+        formData.append("name", user.name);
+        formData.append("email", user.email);
+        formData.append("password", user.password);
+        formData.append("telephone", user.telephone);
+        formData.append("addresse", user.addresse);
+        formData.append("country", user.country);
+        formData.append("urlLinkedin", user.urlLinkedin);
+        formData.append("urlTwitter", user.urlTwitter);
+        formData.append("urlWebsite", user.urlWebsite);
+        axios.post(`http://127.0.0.1:8001/api/update-User/${id}`, formData).then(res => {
+            console.log(res.data);
+            setErrors([]);
+        }).catch(err => {
+            if (err.response && err.response.data && err.response.data.errors) {
+                setErrors(err.response.data.errors);
             }
-
-            const response = await axios.put(
-                `http://127.0.0.1:8001/api/user/${id}`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
-            console.log(response.data);
-        } catch (error) {
-            console.error("Error updating user profile:", error);
-        }
+            else if (err.data.status === 404) {
+                swal('User Not Found ! ', "", 'error');
+                navigate('/');
+            }
+            else {
+                console.error('Error while sending data:', err);
+            }
+        });
     };
 
     return (
@@ -88,25 +101,27 @@ const ProfileSettings = () => {
                                 <img
                                     className="rounded-circle mt-5"
                                     width="150px"
-                                    src={
-                                        imageUrl ||
-                                        (user && user.image
-                                            ? `http://localhost:8001/${user.image}`
-                                            : urlImg)
-                                    }
                                     alt="Profile"
+
                                 />
+
                                 <FaCamera className="camera-icon" />
                                 <input
                                     type="file"
                                     name="image"
                                     id="file"
                                     style={{ display: "none" }}
-                                    onChange={handleFileChange}
+                                    onChange={handleImage}
                                 />
+                                {
+                                    errors.image && (
+                                        <small className="text-danger" >{errors.image}</small>
+                                    )
+                                }
                             </label>
                             <span className="font-weight-bold">{user.name}</span>
                             <span className="text-black-50">{user.email}</span>
+
                         </div>
                     </div>
                     <div className="col-md-5 border-right">
@@ -122,9 +137,13 @@ const ProfileSettings = () => {
                                         type="text"
                                         className="form-control"
                                         name="name"
-                                        value={user.name}
-                                        onChange={(e) => setUser((prevState) => ({ ...prevState, name: e.target.value }))}
-                                    />
+                                        onChange={handleInput}
+                                        value={user.name} />
+                                    {
+                                        errors.name && (
+                                            <small className="text-danger" >{errors.name}</small>
+                                        )
+                                    }
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">Email</label>
@@ -133,11 +152,14 @@ const ProfileSettings = () => {
                                         type="text"
                                         className="form-control"
                                         name="email"
+                                        onChange={handleInput}
                                         value={user.email}
-                                        onChange={(e) =>
-                                            setUser((prevState) => ({ ...prevState, email: e.target.value }))
-                                        }
                                     />
+                                    {
+                                        errors.email && (
+                                            <small className="text-danger" >{errors.email}</small>
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="row mt-2">
@@ -149,11 +171,14 @@ const ProfileSettings = () => {
                                         className="form-control"
                                         placeholder="New password"
                                         name="password"
+                                        onChange={handleInput}
                                         value={user.password}
-                                        onChange={(e) =>
-                                            setUser((prevState) => ({ ...prevState, password: e.target.value }))
-                                        }
                                     />
+                                    {
+                                        errors.password && (
+                                            <small className="text-danger" >{errors.password}</small>
+                                        )
+                                    }
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">phone Number</label>
@@ -163,11 +188,14 @@ const ProfileSettings = () => {
                                         className="form-control"
                                         placeholder="your phone"
                                         name="telephone"
+                                        onChange={handleInput}
                                         value={user.telephone}
-                                        onChange={(e) =>
-                                            setUser((prevState) => ({ ...prevState, telephone: e.target.value }))
-                                        }
                                     />
+                                    {
+                                        errors.telephone && (
+                                            <small className="text-danger" >{errors.telephone}</small>
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="row mt-2">
@@ -179,11 +207,10 @@ const ProfileSettings = () => {
                                         className="form-control"
                                         placeholder="your address"
                                         name="addresse"
+                                        onChange={handleInput}
                                         value={user.addresse}
-                                        onChange={(e) =>
-                                            setUser((prevState) => ({ ...prevState, addresse: e.target.value }))
-                                        }
                                     />
+
                                 </div>
                                 <div className="col-md-6">
                                     <label className="labels">Country</label>
@@ -193,10 +220,8 @@ const ProfileSettings = () => {
                                         className="form-control"
                                         placeholder="your country "
                                         name="country"
+                                        onChange={handleInput}
                                         value={user.country}
-                                        onChange={(e) =>
-                                            setUser((prevState) => ({ ...prevState, country: e.target.value }))
-                                        }
                                     />
                                 </div>
                             </div>
@@ -204,7 +229,7 @@ const ProfileSettings = () => {
                                 <button
                                     className="btn btn-primary profile-button"
                                     type="button"
-                                    onClick={updateUserProfile}
+                                    onClick={updateUser}
                                 >
                                     Save Profile
                                 </button>
@@ -224,6 +249,8 @@ const ProfileSettings = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="LinkedIn Profile URL"
+                                    onChange={handleInput}
+                                    value={user.urlLinkedin}
                                 />
                             </div>
                             <br />
@@ -234,6 +261,8 @@ const ProfileSettings = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Twitter Profile URL"
+                                    onChange={handleInput}
+                                    value={user.urlTwitter}
                                 />
                             </div>
                             <br />
@@ -244,6 +273,8 @@ const ProfileSettings = () => {
                                     type="text"
                                     className="form-control"
                                     placeholder="Personal Website URL"
+                                    onChange={handleInput}
+                                    value={user.urlWebsite}
                                 />
                             </div>
                         </div>

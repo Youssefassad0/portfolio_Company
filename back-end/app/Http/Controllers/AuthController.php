@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class AuthController extends Controller
 {
@@ -73,28 +74,61 @@ class AuthController extends Controller
             return response()->json(['error' => 'Email or password is incorrect.'], 401);
         }
     }
-    public function update(Request $request, $id)
+    public function updateUser(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users,email,' . $id,
+                'name' => 'required|string',
+                'password' => 'required|min:4',
+                'telephone' => 'nullable|string|max:14',
+                'addresse' => 'nullable|string',
+                'country' => 'nullable|string',
+                'urlLinkedin' => 'nullable|string',
+                'urlTwitter' => 'nullable|string',
+                'urlWebsite' => 'nullable|string',
+            ]);
 
-        // Update user information
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = $request->input('password'); // You might want to hash the password before saving
-        $user->telephone = $request->input('telephone');
-        $user->addresse = $request->input('addresse');
-        $user->country = $request->input('country');
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->messages()], 422);
+            } else {
+                $user = User::find($id);
+                if (!$user) {
+                    return response()->json(['data' => $user, 'message' => 'User Not Found.'], 404);
+                } else {
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Store the uploaded file
-            $imagePath = $request->file('image')->store('images');
-            // Update user image path
-            $user->image = $imagePath;
+                    // Handle image upload if provided
+                    if ($request->hasFile('image')) {
+                        $path = $user->image;
+                        if (File::exists($path)) {
+                            File::delete($path);
+                        }
+                        $image = $request->file('image');
+                        $imageName = time() . '.' . $image->getClientOriginalExtension();
+                        $imagePath = 'uploads/users';
+                        $image->move($imagePath, $imageName);
+                        $user->image = $imagePath . '/' . $imageName;
+                    }
+
+                    // Set user attributes
+                    $user->name = $request->input('name');
+                    $user->email = $request->input('email');
+                    $user->password = Hash::make($request->input('password'));
+                    $user->telephone = $request->input('telephone');
+                    $user->addresse = $request->input('addresse');
+                    $user->country = $request->input('country');
+                    $user->urlLinkedin = $request->input('urlLinkedin');
+                    $user->urlTwitter = $request->input('urlTwitter');
+                    $user->urlWebsite = $request->input('urlWebsite');
+
+                    // Save user to the database
+                    $user->update();
+
+                    return response()->json(['data' => $user, 'message' => 'User Updated successfully.'], 201);
+                }
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $user->save();
-
-        return response()->json(['message' => 'User profile updated successfully']);
     }
 }
