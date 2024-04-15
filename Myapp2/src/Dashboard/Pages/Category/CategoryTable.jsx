@@ -35,7 +35,9 @@ const CategoryTable = () => {
                         <tr key={category.id}>
                             <td>{category.name}</td>
                             <td>
-                                <button style={{ backgroundColor: "lightgreen"  }}  >Edit</button>
+                                <button style={{ backgroundColor: "lightgreen"  }}>
+                                   <Link to={`/dashboard/categories/${category.id}`} >Edit</Link>
+                                    </button>
                                 <button style={{ backgroundColor: "red"  }} >Delete</button>
                             </td>
                         </tr>

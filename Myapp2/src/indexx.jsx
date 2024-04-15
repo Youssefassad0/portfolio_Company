@@ -56,7 +56,7 @@ function Appi() {
             </Route>
             <Route path="categories" >
               <Route index element={<Category />} />
-              <Route path=":id" element={<Single entityType="product" />} />
+              <Route path=":id" element={<AddCategory/>} />
               <Route path="new" element={<AddCategory/> }/>
             </Route>
           </Route>
