@@ -68,4 +68,12 @@ class CategoryController extends Controller
             "data" => $category
         ]);
     }
+    public function delete($id)
+    {
+        Category::find($id)->delete();
+        return response()->json([
+            "status" => 200,
+            "message" => "Category deleted with success"
+        ]);
+    }
 }

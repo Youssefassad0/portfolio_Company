@@ -47,3 +47,4 @@ Route::post('/addCategory', [CategoryController::class, 'addCategory']);
 Route::get('/listCategory', [CategoryController::class, 'listCategories']);
 Route::get('/listCategory/{id}', [CategoryController::class, 'listCategory']);
 Route::put('/editCategory/{id}', [CategoryController::class, 'edit']);
+Route::delete('/delete/{id}', [CategoryController::class, 'delete']);
