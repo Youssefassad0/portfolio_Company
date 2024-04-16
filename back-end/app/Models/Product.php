@@ -13,8 +13,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    public function getCategory($id)
+    public function getCategory()
     {
-        return Category::find($id)->name;
+        return Category::find($this->category_id)->name;
     }
 }

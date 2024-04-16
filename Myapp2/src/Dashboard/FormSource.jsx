@@ -50,7 +50,7 @@ export const productInputs = [
         label: "Title",
         type: "text",
         name:"name",
-        placeholder: "Apple Macbook Pro",
+        placeholder: "Le nom de table",
     },
     {
         id: 2,
@@ -64,22 +64,18 @@ export const productInputs = [
         label: "Category",
         type: "select",
         name: "category_id",
-        options: [ 
-            { value: "1", label: "Computers" },
-            { value: "2", label: "Electronics" },
-        ],
     },
     {
         id: 4,
         label: "Price",
-        type: "text",
+        type: "number",
         name:"price",
         placeholder: "100",
     },
     {
         id: 5,
         label: "Stock",
-        type: "text",
+        type: "number",
         name:"stock",
         placeholder: "in stock",
     },

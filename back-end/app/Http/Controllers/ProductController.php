@@ -9,7 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function addProduct(Request  $request)
+    public function products()
+    {
+        $products = Product::with('category')->get(); // Eager loading the 'category' relationship
+        return response()->json([
+            'data' => $products
+        ]);
+    }
+    public function AddProduct(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -38,6 +45,7 @@ class ProductController extends Controller
             $product->price = $request->input('price');
             $product->stock = $request->input('stock');
             $product->image = $imagePath;
+            $product->save();
             return response()->json(['product' => $product, "message" => "added with success ! "], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors

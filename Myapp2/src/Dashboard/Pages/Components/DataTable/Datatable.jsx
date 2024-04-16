@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import "./Datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";

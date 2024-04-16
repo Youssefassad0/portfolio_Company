@@ -50,5 +50,6 @@ Route::get('/listCategory/{id}', [CategoryController::class, 'listCategory']);
 Route::put('/editCategory/{id}', [CategoryController::class, 'edit']);
 Route::delete('/delete/{id}', [CategoryController::class, 'delete']);
 
-// add products 
-Route::post('/addProduct', [ProductController::class, 'addProduct']);
+// add  , list products 
+Route::post('/addProduct', [ProductController::class, 'AddProduct']);
+Route::get('/products', [ProductController::class, 'products']);

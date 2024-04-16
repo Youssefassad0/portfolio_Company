@@ -16,7 +16,7 @@ const List = ({url,titleList}) => {
       navigate('/');
       window.location.reload();
     } 
-  }, [userInfo, navigate]);
+  }, [userInfo, navigate]); 
   return (
     <div className="list">
       <SideBar />

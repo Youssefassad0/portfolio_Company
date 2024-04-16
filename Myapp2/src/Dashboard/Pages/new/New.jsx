@@ -13,7 +13,7 @@ function New({ inputs, title, type }) {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
-  const [categories, setCategories] = useState([]); // State variable to store categories
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function New({ inputs, title, type }) {
       } else if (type === 'employes') {
         url = 'http://127.0.0.1:8001/api/addEmploye';
       } else if (type === 'produits') {
-        url = 'http://127.0.0.1:8001/api/addProduit';
+        url = 'http://127.0.0.1:8001/api/addProduct'; // Ensure this URL is correct
       }
 
       const response = await axios.post(url, formDataWithFile, {
@@ -72,7 +72,7 @@ function New({ inputs, title, type }) {
       setMessage(response.data.message);
       setTimeout(() => {
         setMessage(null);
-        navigate('/dashboard/users')
+
       }, 1000);
       setErrors({});
     } catch (error) {
@@ -88,7 +88,7 @@ function New({ inputs, title, type }) {
     <div className="new">
       <SideBar />
       <div className="newContainer">
-        <NavBar userInfo={userInfo}/>
+        <NavBar userInfo={userInfo} />
         <div className="top">
           <h1>{title}</h1>
         </div>
