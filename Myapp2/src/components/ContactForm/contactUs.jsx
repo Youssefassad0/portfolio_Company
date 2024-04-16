@@ -6,7 +6,7 @@ function Contact() {
     <div className="App">
       <Header/>
     </div>
-    <div className="card">
+    <div className="cardForm">
     <p className="heading">Contact US Now </p>
     
    <div className="input-div">

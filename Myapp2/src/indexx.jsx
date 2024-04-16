@@ -12,7 +12,7 @@ import Home from "./Dashboard/Pages/Home/Home";
 import List from "./Dashboard/Pages/list/List";
 import Single from "./Dashboard/Pages/single/Single";
 import New from "./Dashboard/Pages/new/New";
-import { userInputs, productInputs , employeInputs } from "./Dashboard/FormSource";
+import { userInputs, productInputs, employeInputs } from "./Dashboard/FormSource";
 import { useContext } from "react";
 import { DarkModeContext } from "./Dashboard/Context/darkModeContext";
 import Employes from "./Dashboard/Pages/Employes/Employes";
@@ -21,6 +21,7 @@ import Edit from "./Dashboard/Pages/Edit/Edit";
 import Category from "./Dashboard/Pages/Category/Category";
 import AddCategory from "./Dashboard/Pages/Category/AddCategory";
 import MainProducts from "./Dashboard/Pages/Products/MainProducts";
+import EditProduct from "./Dashboard/Pages/Products/EditProduct/EditProduct";
 
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
@@ -45,20 +46,21 @@ function Appi() {
               <Route path="new" element={<New inputs={userInputs} type="users" title="Add New User" />} />
             </Route>
             <Route path="employes" >
-              <Route index element={<Employes/>} />
+              <Route index element={<Employes />} />
               <Route path=":id" element={<Single entityType="employee" />} />
               <Route path="edit/:id" element={<Edit entityType="employee" inputs={employeInputs} type="employes" title="Edit Employee" />} />
               <Route path="new" element={<New inputs={employeInputs} type="employes" title="Add New Employe" />} />
             </Route>
             <Route path="products" >
               <Route index element={<MainProducts />} />
-              <Route path=":id" element={<Single entityType="product" />} />
+
+              <Route path="edit/:id" element={<EditProduct />} />
               <Route path="new" element={<New inputs={productInputs} type="produit" title="Add New Product" />} />
             </Route>
             <Route path="categories" >
               <Route index element={<Category />} />
-              <Route path=":id" element={<AddCategory/>} />
-              <Route path="new" element={<AddCategory/> }/>
+              <Route path=":id" element={<AddCategory />} />
+              <Route path="new" element={<AddCategory />} />
             </Route>
           </Route>
         </Routes>
