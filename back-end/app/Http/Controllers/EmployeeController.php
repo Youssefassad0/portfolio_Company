@@ -58,8 +58,6 @@ class EmployeeController extends Controller
                 $fileName = time() . '.' . $file->getClientOriginalExtension();
                 $path = 'uploads/employes';
                 $file->move($path, $fileName);
-
-                // Set image path
                 $imagePath = $path . '/' . $fileName;
             }
 
@@ -75,7 +73,7 @@ class EmployeeController extends Controller
             $employe->image = $imagePath; // Assign image path
             $employe->save();
 
-            return response()->json(['employe' => $employe, "message" => "added with success ! "], 200);
+            return response()->json(['employe' => $employe, "message" => "added with success ! "], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
         }

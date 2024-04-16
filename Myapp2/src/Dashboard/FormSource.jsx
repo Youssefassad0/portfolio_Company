@@ -1,3 +1,4 @@
+
 export const userInputs = [
     {
         id: 1,
@@ -61,9 +62,12 @@ export const productInputs = [
     {
         id: 3,
         label: "Category",
-        type: "text",
-        name:"category_id",
-        placeholder: "Computers",
+        type: "select",
+        name: "category_id",
+        options: [ 
+            { value: "1", label: "Computers" },
+            { value: "2", label: "Electronics" },
+        ],
     },
     {
         id: 4,

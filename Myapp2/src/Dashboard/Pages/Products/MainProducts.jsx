@@ -22,6 +22,7 @@ function MainProducts() {
 
                         <div className="product-list">
                             <Product />
+                            {/* <Product /> */}
                         </div>
                     </div>
                 </div>

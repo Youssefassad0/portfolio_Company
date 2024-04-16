@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './New.scss';
 import SideBar from '../Components/SideBar/SideBar';
 import axios from 'axios';
@@ -13,13 +13,26 @@ function New({ inputs, title, type }) {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
-
+  const [categories, setCategories] = useState([]); // State variable to store categories
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!userInfo || userInfo.user.role !== 'admin') {
       navigate('/');
     }
   }, [navigate, userInfo]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get('http://127.0.0.1:8001/api/listCategory');
+        setCategories(response.data.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   const handleChange = (e, name) => {
     const value = e.target.value;
@@ -60,12 +73,10 @@ function New({ inputs, title, type }) {
       setTimeout(() => {
         setMessage(null);
         navigate('/dashboard/users')
-    }, 1000);
+      }, 1000);
       setErrors({});
-      // Do something with the response, e.g., redirect the user.
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
-        // setErrors(error.response.data.errors);
         setErrors(error.response.data.errors);
       } else {
         console.error('Error while sending data:', error);
@@ -82,10 +93,10 @@ function New({ inputs, title, type }) {
           <h1>{title}</h1>
         </div>
         {message && (
-                        <div className="alert alert-success">
-                            {message}
-                        </div>
-                    )}
+          <div className="alert alert-success">
+            {message}
+          </div>
+        )}
         <div className="bottom">
           <div className="left">
             <img
@@ -110,17 +121,29 @@ function New({ inputs, title, type }) {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    name={input.name}
-                    value={formData[input.name] || ''}
-                    onChange={(e) => handleChange(e, input.name)}
-                  />
+                  {input.name === 'category_id' ? ( // Render select dropdown for category
+                    <select
+                      name="category_id"
+                      value={formData['category_id'] || ''}
+                      onChange={(e) => handleChange(e, 'category_id')}
+                    >
+                      <option value="">Select category</option>
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>{category.name}</option>
+                      ))}
+                    </select>
+                  ) : ( // Render input field for other fields
+                    <input
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      name={input.name}
+                      value={formData[input.name] || ''}
+                      onChange={(e) => handleChange(e, input.name)}
+                    />
+                  )}
                   {errors[input.name] && <div className="text-danger">{errors[input.name]}</div>}
                 </div>
               ))}
-
               <button type="submit">Send</button>
             </form>
           </div>

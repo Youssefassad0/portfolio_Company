@@ -1,6 +1,6 @@
 import NavBar from '../../Components/NavBar/NavBar'
 import SideBar from '../../Components/SideBar/SideBar'
-import './EditProduct.css'
+import './EditProduct.scss'
 function EditProduct() {
   return (
     <>
@@ -11,7 +11,7 @@ function EditProduct() {
           <div className="top">
             <h1> Edit Products</h1>
           </div>
-          <form>
+          <form className='cateForm' >
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" required />
 
