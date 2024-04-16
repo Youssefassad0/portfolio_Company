@@ -89,7 +89,7 @@ class UserController extends Controller
                 'name' => 'required|string',
                 'addresse' => 'nullable|string',
                 'country' => 'nullable|string',
-                'telephone' => 'nullable|string|max:10',
+                'telephone' => 'nullable|max:10',
                 'password' => 'nullable|min:4',
                 'email' => 'required|email|unique:employes,email,' . $id,
             ]);

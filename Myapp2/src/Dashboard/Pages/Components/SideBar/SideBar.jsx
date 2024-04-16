@@ -41,10 +41,12 @@ function SideBar() {
                             <span> Users </span>
                         </li>
                     </Link>
+                  <Link to="/dashboard/products" >
                     <li>
                         <SiHomeassistantcommunitystore id="icon" />
                         <span>Products</span>
                     </li>
+                  </Link>
                     <Link to="/dashboard/employes" style={{ textDecoration: "none" }} >
                         <li>
                             <BadgeIcon id="icon" />

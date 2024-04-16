@@ -39,10 +39,10 @@ Route::delete('/employes/{id}', [EmployeeController::class, 'deleteEmploye']);
 Route::get('/employes/{id}', [EmployeeController::class, 'listEmploye']);
 Route::get('/employes', [EmployeeController::class, 'listEmployes']);
 Route::post('/addEmploye', [EmployeeController::class, 'addEmploye']);
-Route::post('/updateemployes/{id}', [EmployeeController::class, 'updateEmploye']);
+Route::put('/updateemployes/{id}', [EmployeeController::class, 'updateEmploye']);
 
 
-// add , show  , edit    Category 
+// add , show  , edit and delete   Category 
 Route::post('/addCategory', [CategoryController::class, 'addCategory']);
 Route::get('/listCategory', [CategoryController::class, 'listCategories']);
 Route::get('/listCategory/{id}', [CategoryController::class, 'listCategory']);

@@ -56,7 +56,7 @@ function Update({ type, inputs, title }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`http://127.0.0.1:8001/api/update${type}/${id}`, formData);
+      const response = await axios.put(`http://127.0.0.1:8001/api/update${type}/${id}`, formData);
       console.log(response.data);
       setMessage(response.data.message);
       setErrors({});

@@ -20,6 +20,7 @@ import Profile from "./components/Profile/Profile";
 import Edit from "./Dashboard/Pages/Edit/Edit";
 import Category from "./Dashboard/Pages/Category/Category";
 import AddCategory from "./Dashboard/Pages/Category/AddCategory";
+import MainProducts from "./Dashboard/Pages/Products/MainProducts";
 
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
@@ -50,7 +51,7 @@ function Appi() {
               <Route path="new" element={<New inputs={employeInputs} type="employes" title="Add New Employe" />} />
             </Route>
             <Route path="products" >
-              <Route index element={<List />} />
+              <Route index element={<MainProducts />} />
               <Route path=":id" element={<Single entityType="product" />} />
               <Route path="new" element={<New inputs={productInputs} type="produit" title="Add New Product" />} />
             </Route>
