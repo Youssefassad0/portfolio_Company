@@ -22,6 +22,7 @@ import Category from "./Dashboard/Pages/Category/Category";
 import AddCategory from "./Dashboard/Pages/Category/AddCategory";
 import MainProducts from "./Dashboard/Pages/Products/MainProducts";
 import EditProduct from "./Dashboard/Pages/Products/EditProduct/EditProduct";
+import NewProduct from "./Dashboard/Pages/new/NewProduct";
 
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
@@ -55,7 +56,7 @@ function Appi() {
               <Route index element={<MainProducts />} />
 
               <Route path="edit/:id" element={<EditProduct />} />
-              <Route path="new" element={<New inputs={productInputs} type="produit" title="Add New Product" />} />
+              <Route path="new" element={<NewProduct inputs={productInputs} type="produit" title="Add New Product" />} />
             </Route>
             <Route path="categories" >
               <Route index element={<Category />} />

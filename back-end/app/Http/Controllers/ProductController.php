@@ -51,4 +51,12 @@ class ProductController extends Controller
             return response()->json(['error' => $e->getMessage()], 500); // Handle unexpected errors
         }
     }
+    public function delete($id)
+    {
+        $product = Product::find($id)->delete();
+        return response()->json([
+            'data' => $product,
+            "message" => "deleted with success!"
+        ]);
+    }
 }

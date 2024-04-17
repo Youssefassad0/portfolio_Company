@@ -105,7 +105,7 @@ function New({ inputs, title, type }) {
             />
           </div>
           <div className="right">
-            <form onSubmit={handleSubmit} method='post' >
+            <form onSubmit={handleSubmit}  >
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon-image" />
