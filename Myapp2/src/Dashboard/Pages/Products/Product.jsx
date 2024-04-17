@@ -50,10 +50,10 @@ function Product({ product }) {
                     <div className="price">Price: {product.price} DH</div>
                     <div className="stock">Stock: {product.stock}</div>
                     <div className="btn-row">
-                        <Link to={`/Dashboard/products/edit/${product.id}`} className="btn btn-sm btn-outline-success">
+                        <Link to={`/Dashboard/products/edit/${product.id}`}  className="btn btn-sm btn-outline-success">
                             <CiEdit /> Edit
                         </Link>
-                        <button onClick={() => deleteProduct(product.id)} className="btn btn-sm btn-outline-danger">
+                        <button onClick={() => deleteProduct(product.id) }  className="btn btn-sm btn-outline-danger">
                             <MdDelete /> Delete
                         </button>
                     </div>

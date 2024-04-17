@@ -31,8 +31,8 @@ function Widget({ type, length }) {
             data = {
                 title: 'Products',
                 isMoney: true,
-                mount: 100,
-                url:'/dashboard/employes',
+                mount:length,
+                url:'/dashboard/products',
                 link: "View all products",
                 icon: (
                     <Inventory2Icon className='w-icon'

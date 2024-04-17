@@ -12,13 +12,16 @@ import axios from 'axios'
 function Home() {
   const navigate = useNavigate();
   const [users,setUsers]=useState([]);
+  const [products,setProducts]=useState([]);
   const [employes,setEmployes]=useState([]);
   const fetchData = async () => {
     try {
         const response = await axios.get("http://127.0.0.1:8001/api/users");
         const response2 = await axios.get("http://127.0.0.1:8001/api/employes");
+        const response3= await axios.get("http://127.0.0.1:8001/api/products");
         setUsers(response.data.users);
         setEmployes(response2.data.employes);
+        setProducts(response3.data.data)
         // console.log(response2);
         // setTimeout(() => setLoading(false), 1000);
     } catch (error) {
@@ -42,7 +45,7 @@ function Home() {
         <NavBar userInfo={userInfo} />
         <div className="widgets">
           <Widget type="user"  length={users.length} />
-          <Widget type="products" />
+          <Widget type="products" length={products.length} />
           <Widget type="employes" length={employes.length}/>
           {/* <Widget type="balance" /> */}
         </div>

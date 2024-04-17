@@ -9,7 +9,7 @@ import axios from 'axios';
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [message, setMessage] = useState('');
   const [error, setError] = useState(null);
   const [userInfo, setUserInfo] = useState(() => {
     try {
@@ -65,13 +65,16 @@ function EditProduct() {
       formData.append('price', product.price);
       formData.append('stock', product.stock);
       formData.append('image', e.target.elements.image.files[0]);
-  
-      await axios.post(`http://127.0.0.1:8001/api/updateProduct/${id}`, formData);
+
+   const result=   await axios.post(`http://127.0.0.1:8001/api/updateProduct/${id}`, formData);
+   setMessage(result.data.message);
+     setTimeout(()=>{ setMessage("");
+     },1300)
     } catch (error) {
       setError(error.message);
     }
   };
-  
+
   return (
     <>
       <div className="new">
@@ -82,7 +85,11 @@ function EditProduct() {
             <h1>Edit Products</h1>
           </div>
           <form className="cateForm" onSubmit={handleSubmit}>
-            {error && <p>Error: {error}</p>}
+            {
+              message && <div className="alert alert-success">
+                {message}
+              </div>
+            }
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="name" value={product.name} onChange={handleInput} />
 
