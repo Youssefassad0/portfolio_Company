@@ -17,14 +17,12 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'name' => 'required|string',
             'password' => 'required|min:4',
-            // 'image' => 'nullable|mimes:png,jpg,jpeg,webp'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Initialize image path variable
         $imagePath = null;
 
         if ($request->hasFile('image')) {
@@ -43,7 +41,7 @@ class AuthController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
-        $user->image = $imagePath; // Assign image path
+        $user->image = $imagePath;
         $user->save();
 
         // Return user object with image path in the response

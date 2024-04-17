@@ -57,6 +57,7 @@ function NewProduct({ inputs, title }) {
             setFormData({});
             setFile(null);
             setErrors({});
+            navigate('/dashboard/products')
             // Optionally, you can redirect or display a success message here
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {

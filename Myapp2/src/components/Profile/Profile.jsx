@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import axios from "axios";
 import swal from "sweetalert";
-// import swal from "sweetalert";
+
 
 const ProfileSettings = () => {
     const urlImg =
