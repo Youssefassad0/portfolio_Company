@@ -62,11 +62,12 @@ class ProductController extends Controller
     }
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::with('category')->find($id);
         return response()->json([
             'data' => $product
         ]);
     }
+
 
     public function updateProduct(Request $request, $id)
     {
@@ -78,7 +79,6 @@ class ProductController extends Controller
                 'price' => 'nullable|numeric',
                 'stock' => 'nullable|numeric',
             ]);
-
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->messages()], 422);
             } else {
@@ -97,7 +97,6 @@ class ProductController extends Controller
                         $image->move($imagePath, $imageName);
                         $product->image = $imagePath . '/' . $imageName;
                     }
-
                     // Set user attributes
                     $product->name = $request->input('name');
                     $product->description = $request->input('description');
@@ -105,7 +104,6 @@ class ProductController extends Controller
                     $product->price = $request->input('price');
                     $product->stock = $request->input('stock');
                     $product->update();
-
                     return response()->json(['data' => $product, 'message' => 'Product Updated successfully.'], 200);
                 }
             }
