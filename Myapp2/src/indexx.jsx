@@ -3,7 +3,6 @@ import React from "react";
 import "./Style/Dark.scss";
 import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Products from "./components/Products/Products";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Contact from "./components/ContactForm/contactUs";
@@ -23,6 +22,8 @@ import AddCategory from "./Dashboard/Pages/Category/AddCategory";
 import MainProducts from "./Dashboard/Pages/Products/MainProducts";
 import EditProduct from "./Dashboard/Pages/Products/EditProduct/EditProduct";
 import NewProduct from "./Dashboard/Pages/new/NewProduct";
+import HomeProducts from "./components/Products/HomeProducts";
+import Products from "./components/Products/Products";
 
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
@@ -32,10 +33,11 @@ function Appi() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products" element={<HomeProducts />} />
           <Route path="/Services" element={<Service />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/product/:id" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" >
@@ -54,7 +56,6 @@ function Appi() {
             </Route>
             <Route path="products" >
               <Route index element={<MainProducts />} />
-
               <Route path="edit/:id" element={<EditProduct />} />
               <Route path="new" element={<NewProduct inputs={productInputs} type="produit" title="Add New Product" />} />
             </Route>

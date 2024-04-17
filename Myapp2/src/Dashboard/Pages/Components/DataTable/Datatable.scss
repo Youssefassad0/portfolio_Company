@@ -1,7 +1,8 @@
 .datatable {
     height: 600px;
     padding: 20px;
-
+    overflow-x: auto;
+    min-width: 100%;
     .admin-row {
         background-color: #98e278;
         /* Example background color for admin rows */
