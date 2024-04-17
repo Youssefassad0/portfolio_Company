@@ -17,12 +17,20 @@ class ProductController extends Controller
             'data' => $products
         ]);
     }
+    public function productsRandom()
+    {
+        $products = Product::with('category')->inRandomOrder()->get(); // Récupérer des produits de façon aléatoire
+        return response()->json([
+            'data' => $products
+        ]);
+    }
+
     public function AddProduct(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string',
-                'description' => 'nullable|string|max:400',
+                'description' => 'nullable|string|max:500',
                 'category_id' => 'required',
                 'price' => 'nullable|numeric',
                 'stock' => 'nullable|numeric',
@@ -67,6 +75,12 @@ class ProductController extends Controller
             'data' => $product
         ]);
     }
+    // public function listProductCat($name){
+    //     $products=Product::where('category',$name);
+    //     return response()->json([
+    //         'data'=>$product
+    //     ])
+    // }
 
 
     public function updateProduct(Request $request, $id)

@@ -52,7 +52,8 @@ Route::delete('/delete/{id}', [CategoryController::class, 'delete']);
 
 // add  , list products 
 Route::post('/addProduct', [ProductController::class, 'AddProduct']);
-Route::get('/products', [ProductController::class, 'products']);
+Route::get('/productsR', [ProductController::class, 'productsRandom']);
 Route::delete('/delete/{id}', [ProductController::class, 'delete']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/updateProduct/{id}', [ProductController::class, 'updateProduct']);
+Route::get('/products', [ProductController::class, 'products']);

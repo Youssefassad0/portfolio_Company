@@ -12,13 +12,13 @@ function HomeProducts() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get('http://127.0.0.1:8001/api/products');
+                const response = await axios.get('http://127.0.0.1:8001/api/productsR');
                 const cate = await axios.get('http://127.0.0.1:8001/api/listCategory');
                 setCategories(cate.data.data);
                 setProducts(response.data.data);
                 setTimeout(() => {
                     setLoading(false)
-                }, 1300)
+                }, 500)
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -47,7 +47,7 @@ function HomeProducts() {
                         <div className="p-title">PRODUCT LIST</div>
                         <div className="category-filter">
                             <label htmlFor="category">Filter by Category:</label>
-                            <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
+                            <select id="category"  onChange={handleCategoryChange}>
                                 <option value="">All Categories</option>
                                 {/* Assuming categories is an array of all unique categories */}
                                 {categories.map(category => (

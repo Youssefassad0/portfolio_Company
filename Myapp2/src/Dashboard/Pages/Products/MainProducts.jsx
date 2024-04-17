@@ -38,7 +38,7 @@ function MainProducts() {
         <NavBar userInfo={userInfo} />
         <div className="top">
           <div className="datatableTitle">
-            Add New Employee
+            Add New Product
             <Link to="/dashboard/products/new" className="link">
               Add New
             </Link>
