@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -57,3 +58,7 @@ Route::delete('/delete/{id}', [ProductController::class, 'delete']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/updateProduct/{id}', [ProductController::class, 'updateProduct']);
 Route::get('/products', [ProductController::class, 'products']);
+
+// Contact
+Route::post('/sendMessage', [ContactController::class, 'sendMessage']);
+Route::get('/ListMessages', [ContactController::class, 'ListMessages']);

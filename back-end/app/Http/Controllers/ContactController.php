@@ -8,27 +8,27 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
-    public function ListContact()
+    public function ListMessages()
     {
         $messages = Contact::all();
         return response()->json([
             'messages' => $messages
         ]);
     }
-    public function SendContact(Request $request)
+    public function sendMessage(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
-                'telephone' => 'required|numeric',
-                "message" => 'required|min:10|text'
+                'telephone' => 'required|min:6|max:9',
+                "message" => 'required|min:10|string'
             ]);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
             $message = new Contact;
             $message->email = $request->input('email');
-            $message->telephone = $request->input('etelephonemail');
+            $message->telephone = $request->input('telephone');
             $message->message = $request->input('message');
             $message->save();
             return response()->json(['data' => $message, "message" => "Send with success ! "], 201);

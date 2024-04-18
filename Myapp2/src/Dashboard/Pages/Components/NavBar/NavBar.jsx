@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import './NavBar.scss'
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useContext } from "react";
+import { IoMdNotifications } from "react-icons/io";
 import { DarkModeContext } from "../../../Context/darkModeContext";
 function NavBar({ userInfo }) {
   const { dispatch } = useContext(DarkModeContext);
@@ -20,10 +21,16 @@ function NavBar({ userInfo }) {
           <FaSearch />
         </div>
         <div className="d-items">
-          <div className="d-item"onClick={()=>dispatch({type:'TOGGLE'})} >
-          {
-            darkMode ? <LightModeIcon className="d-icon" /> : <MdDarkMode id="d-icon" /> 
-           }
+          
+          <div className="d-item" onClick={() => dispatch({ type: 'TOGGLE' })} >
+            {
+              darkMode ? <LightModeIcon className="d-icon" /> : <MdDarkMode id="d-icon" />
+            }
+          </div>
+          <div className="d-item" >
+            <Link to="/dashboard/messages" >
+            <IoMdNotifications/>
+            </Link>
           </div>
           <div className="d-item">
             {userInfo && userInfo.user.image ? (
