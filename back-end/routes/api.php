@@ -59,6 +59,7 @@ Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::post('/updateProduct/{id}', [ProductController::class, 'updateProduct']);
 Route::get('/products', [ProductController::class, 'products']);
 
-// Contact
+//  Send , delete , show  Contact
 Route::post('/sendMessage', [ContactController::class, 'sendMessage']);
 Route::get('/ListMessages', [ContactController::class, 'ListMessages']);
+Route::delete('/deleteMessage', [ContactController::class, 'delete']);

@@ -46,7 +46,7 @@ const [messages,setMessages]=useState([]);
            </a>
    
            <a className="mark-as-read" href="">
-             Mark as Read
+            Delete it 
            </a>
          </div>
        </div>

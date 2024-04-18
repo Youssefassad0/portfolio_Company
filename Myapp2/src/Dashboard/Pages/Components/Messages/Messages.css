@@ -1,5 +1,13 @@
+.messages-container {
+    width: 80%;
+    margin: 0 auto;
+  }
 .card {
-    max-width: 320px;
+    max-width: 70%;
+    height: 350px;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    margin-left: 140px;
     border-width: 1px;
     border-color: rgba(219, 234, 254, 1);
     border-radius: 1rem;

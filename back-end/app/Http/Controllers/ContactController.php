@@ -36,4 +36,11 @@ class ContactController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function delete($id)
+    {
+        Contact::find($id)->delete();
+        return response()->json([
+            'message' => 'Deleted With Success ! '
+        ]);
+    }
 }
