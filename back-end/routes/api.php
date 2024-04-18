@@ -62,4 +62,5 @@ Route::get('/products', [ProductController::class, 'products']);
 //  Send , delete , show  Contact
 Route::post('/sendMessage', [ContactController::class, 'sendMessage']);
 Route::get('/ListMessages', [ContactController::class, 'ListMessages']);
-Route::delete('/deleteMessage', [ContactController::class, 'delete']);
+Route::delete('/deleteMessage/{id}', [ContactController::class, 'delete']);
+Route::get('/ListMessage/{id}', [ContactController::class, 'ListMessage']);
