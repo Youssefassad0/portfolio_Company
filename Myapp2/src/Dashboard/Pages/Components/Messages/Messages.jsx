@@ -38,7 +38,7 @@ function Messages() {
                         </div>
                     }
                     {messages.map((message, index) => (
-                        <div key={index} className="card">
+                        <div key={index} className="cardMessage">
                             <div className="header">
                                 <span className="icon">
                                     <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

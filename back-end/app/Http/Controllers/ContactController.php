@@ -53,7 +53,7 @@ class ContactController extends Controller
         if (!$contact) {
             return response()->json(['error' => 'Message  not found.'], 404);
         }
-        $contact->delete();
+
         return response()->json([
             'data' => $contact
         ]);
