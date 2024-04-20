@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,3 +65,6 @@ Route::post('/sendMessage', [ContactController::class, 'sendMessage']);
 Route::get('/ListMessages', [ContactController::class, 'ListMessages']);
 Route::delete('/deleteMessage/{id}', [ContactController::class, 'delete']);
 Route::get('/ListMessage/{id}', [ContactController::class, 'ListMessage']);
+
+// transact 
+Route::get('/transactions', [TransactController::class, 'Transactions']);

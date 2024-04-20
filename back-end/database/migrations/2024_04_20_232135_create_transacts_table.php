@@ -17,9 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->date('date');
             $table->float('Amount');
+            $table->unsignedBigInteger('id_payment');
             $table->string('status');
             $table->foreign('id_product')->references('id')->on('products');
             $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_payment')->references('id')->on('payments');
             $table->timestamps();
         });
     }

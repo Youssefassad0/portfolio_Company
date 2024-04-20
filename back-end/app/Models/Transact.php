@@ -8,19 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Transact extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_product', 'id_user', 'date', 'Amount', 'status'];
+    protected $fillable = ['id_product', 'id_user', 'date', 'id_payment', 'Amount', 'status'];
     public function payment()
     {
         return $this->belongsTo(Payment::class);
     }
     public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'id_product');
     }
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'id_user');
     }
+
     public function getProduct()
     {
         return Product::find($this->id_product)->name;
