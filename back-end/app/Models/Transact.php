@@ -17,6 +17,10 @@ class Transact extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
     public function getProduct()
     {
         return Product::find($this->id_product)->name;
