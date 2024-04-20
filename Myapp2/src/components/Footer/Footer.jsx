@@ -21,8 +21,8 @@ const Footer = () => {
                 className="logo"
               />
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Expedita quis corrupti nostrum repellendus voluptatum,
+              Welcome to our world of precision-crafted inox and iron creations
+Step into a realm where craftsmanship meets innovation
               </p>
             </div>
             <div className="col">

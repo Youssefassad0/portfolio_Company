@@ -65,7 +65,7 @@ function SingleMessage() {
                                     <span className="blog-slider__code">{message.created_at}</span>
                                     <div className="blog-slider__title">{message.email}</div>
                                     <div className="blog-slider__text">{message.message}</div>
-                                    <button className="blog-slider__button"><a style={{ textDecoration:'none' }} href={`mailto:${message.email}`}>Send email</a></button>
+                                    <button className="blog-slider__button"><a style={{ textDecoration: 'none' }} href={`mailto:${message.email}`}>Send email</a></button>
                                 </div>
                             </div>
                         </div>
