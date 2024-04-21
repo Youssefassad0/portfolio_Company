@@ -12,6 +12,7 @@ import axios from 'axios';
 import TransactionUser from '../Components/Transaction/TransactionUser';
 
 function Single({ entityType }) {
+  console.log();
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('user-info'));
   const { id } = useParams();
@@ -56,7 +57,7 @@ function Single({ entityType }) {
             </div>
             <h1 className="user-title">Informations</h1>
             <div className="user-item">
-              <img src={entityData ? `http://127.0.0.1:8001/${entityData.image}` : null} alt="profile" className="itemImg" />
+              <img src={entityData ? `http://127.0.0.1:8001/${entityData.image}` : urlImg} alt="profile" className="itemImg" />
               <div className="details">
               <h1 className="itemTitle">{entityData && entityType==="user" ? entityData.name : null}</h1> <h1 className="itemTitle">{entityData && entityType==="employee" ? entityData.nom + " "+ entityData.prenom : null}</h1>
                 <div className="detailItem">
@@ -106,7 +107,7 @@ function Single({ entityType }) {
           </div>
         </div>
         <div className="user-bottom">
-        <TransactionUser userName={entityData && entityType === 'user' ? entityData.name : ''} />
+        <TransactionUser userName={entityData && entityType === 'user' ? entityData.name : null} />
         </div>
       </div>
     </div>

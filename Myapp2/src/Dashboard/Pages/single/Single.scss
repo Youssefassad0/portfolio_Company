@@ -82,4 +82,22 @@
             margin-bottom: 20px;
         }
     }
+    @media (max-width: 768px) {
+        .singleContainer {
+            .user-top {
+                flex-direction: column; /* Change to column layout on smaller screens */
+                gap: 0; /* Remove gap between items */
+
+                .user-left,
+                .user-right {
+                    width: 100%; /* Make both columns full width */
+                    min-width: unset; /* Remove minimum width */
+                }
+
+                .user-left {
+                    margin-bottom: 20px; /* Add margin between columns */
+                }
+            }
+        }
+    }
 }
