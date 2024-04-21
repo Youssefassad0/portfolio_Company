@@ -57,7 +57,7 @@ function Home() {
           <div className="listTitle">
             Latest Transaction
           </div>
-          <Transaction />
+          <Transaction  />
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import './Transaction.scss'
+
 const Transaction = () => {
   const [transactions, setTransactions] = useState([]);
 
@@ -15,7 +16,15 @@ const Transaction = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8001/api/transactions");
-        setTransactions(response.data.data);
+        // Filter transactions for the current week
+        const currentWeekTransactions = response.data.data.filter(transaction => {
+          const transactionDate = new Date(transaction.date);
+          const today = new Date();
+          const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+          const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+          return transactionDate >= startOfWeek && transactionDate <= endOfWeek;
+        });
+        setTransactions(currentWeekTransactions);
       } catch (error) {
         console.error("Error fetching transaction data:", error);
       }

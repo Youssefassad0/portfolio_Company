@@ -7,8 +7,9 @@ import './Single.scss';
 import SideBar from '../Components/SideBar/SideBar';
 import NavBar from '../Components/NavBar/NavBar';
 import Chart from '../Components/chart/Chart';
-import Transaction from '../Components/Transaction/Transaction';
+// import Transaction from '../Components/Transaction/Transaction';
 import axios from 'axios';
+import TransactionUser from '../Components/Transaction/TransactionUser';
 
 function Single({ entityType }) {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ function Single({ entityType }) {
           </div>
         </div>
         <div className="user-bottom">
-          <Transaction />
+        <TransactionUser userName={entityData && entityType === 'user' ? entityData.name : ''} />
         </div>
       </div>
     </div>
