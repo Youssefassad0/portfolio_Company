@@ -68,3 +68,5 @@ Route::get('/ListMessage/{id}', [ContactController::class, 'ListMessage']);
 
 // transact 
 Route::get('/transactions', [TransactController::class, 'Transactions']);
+Route::get('/getMethodePayment', [TransactController::class, 'Payments']);
+Route::post('/transactions', [TransactController::class, 'store']);

@@ -26,6 +26,7 @@ import HomeProducts from "./components/Products/HomeProducts";
 import Products from "./components/Products/Products";
 import Messages from "./Dashboard/Pages/Components/Messages/Messages";
 import SingleMessage from "./Dashboard/Pages/Components/Messages/SingleMessage";
+import AddTransactionPage from "./Dashboard/Pages/Components/Transaction/AddTransactionPage";
 
 function Appi() {
   const { darkMode } = useContext(DarkModeContext);
@@ -69,6 +70,9 @@ function Appi() {
             <Route path="messages" >
             <Route index element={<Messages />} />
             <Route path=":id" element={<SingleMessage />} />
+            </Route>
+            <Route path="transactions" >
+            <Route index element={<AddTransactionPage />} />
             </Route>
           </Route>
         </Routes>

@@ -9,6 +9,7 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import { IoLogOut } from "react-icons/io5";
 import BadgeIcon from '@mui/icons-material/Badge';
 import { Link } from "react-router-dom";
+import PaymentIcon from '@mui/icons-material/Payment';
 import { DarkModeContext } from "../../../Context/darkModeContext";
 import { useContext } from "react";
 function SideBar() {
@@ -59,10 +60,12 @@ function SideBar() {
                             <span>Category</span>
                         </li>
                     </Link>
+                    <Link to="/dashboard/transactions" style={{ textDecoration:'none' }} >
                     <li>
-                        <IoSettingsSharp id="icon" />
-                        <span>Settings</span>
+                        <PaymentIcon id="icon" />
+                        <span>Add Payments</span>
                     </li>
+                    </Link>
                     <p className="title">
                         Admin
                     </p>
