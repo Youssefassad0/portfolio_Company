@@ -8,12 +8,18 @@ import { IoSettingsSharp } from "react-icons/io5";
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import { IoLogOut } from "react-icons/io5";
 import BadgeIcon from '@mui/icons-material/Badge';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PaymentIcon from '@mui/icons-material/Payment';
 import { DarkModeContext } from "../../../Context/darkModeContext";
 import { useContext } from "react";
 function SideBar() {
+  const navigate = useNavigate();
+
     const { dispatch } = useContext(DarkModeContext);
+    function LogOut(){
+        localStorage.clear();
+        navigate('/');
+    }
     return (
         <div className="sidebar">
             <div className="sidebar-top">
@@ -73,7 +79,7 @@ function SideBar() {
                         <PersonPinIcon id="icon" />
                         <span>Profile</span>
                     </li>
-                    <li>
+                    <li onClick={LogOut} >
                         <IoLogOut id="icon" />
                         <span>Logout</span>
                     </li>

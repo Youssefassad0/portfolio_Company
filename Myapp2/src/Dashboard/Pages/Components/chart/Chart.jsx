@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import "./Chart.scss";
 import {
   AreaChart,
   Area,
@@ -11,45 +10,30 @@ import {
 } from "recharts";
 
 const Chart = ({ aspect, title, dataT }) => {
-  // Function to format the transaction data for the chart
-  const formatDataForChart = (dataT) => {
-    // Initialize an empty object to store formatted data
+  if (!dataT || dataT.length === 0) {
+    return <div className="chart">No data available</div>;
+  }
+
+  const formatDataForChart = (data) => {
     const formattedData = {};
-    
-    // Loop through the transaction data and aggregate the amount for each month
-    dataT.forEach((transaction) => {
-      // Extract the month from the transaction date
-      const month = new Date(transaction.date).toLocaleString('default', { month: 'long' });
-  
-      // If the month already exists in the formatted data, add the amount to its total
-      if (formattedData[month]) {
-        formattedData[month] += transaction.Amount;
-      } else {
-        // Otherwise, initialize the total for the month
-        formattedData[month] = transaction.Amount;
-      }
+    data.forEach((item) => {
+      const month = new Date(item.date).toLocaleString("default", { month: "long" });
+      formattedData[month] = (formattedData[month] || 0) + item.Amount;
     });
-  
-    // Convert the formatted data object into an array of objects for recharts
-    const chartData = Object.keys(formattedData).map((month) => ({
-      name: month,
-      Total: formattedData[month],
-    }));
-  
-    // Sort the chart data by month
-    chartData.sort((a, b) => {
-      const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
-      return monthNames.indexOf(a.name) - monthNames.indexOf(b.name);
-    });
-  
+
+    const chartData = Object.keys(formattedData)
+      .map((month) => ({ name: month, Total: formattedData[month] }))
+      .sort((a, b) => {
+        const monthNames = [
+          "January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames.indexOf(a.name) - monthNames.indexOf(b.name);
+      });
+
     return chartData;
   };
-  
 
-  // Format transaction data for the chart
   const chartData = formatDataForChart(dataT);
 
   return (
@@ -57,9 +41,7 @@ const Chart = ({ aspect, title, dataT }) => {
       <div className="c-title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
         <AreaChart
-          width={730}
-          height={250}
-          data={chartData} // Use the formatted chart data
+          data={chartData}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>

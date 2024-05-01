@@ -90,20 +90,16 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div className='btns' >
+
           <button className="btn" onClick={handleLogin}>
             Log In
           </button>
-          <Link to="/register">
-            <button className="btn">Sign Up</button>
+          <Link to="/register"  >
+            <a className="btn">Sign Up</a>
           </Link>
-          <div className="social">
-            <div className="go">
-              <i className="fab fa-google"></i> Google
-            </div>
-            <div className="fb">
-              <i className="fab fa-facebook"></i> Facebook
-            </div>
           </div>
+
         </form>
       </div>
     </>

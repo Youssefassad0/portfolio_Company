@@ -33,7 +33,6 @@ function Products() {
     }
     fetchData();
   }, [id]);
-
   return (
     <>
       <div className="App">
@@ -56,14 +55,19 @@ function Products() {
                 <button>Check Out</button>
                 <button>Chat Us</button>
               </div>
-              <div className="description">{product.description}</div>
+          
+                <div className="description">
+                {
+                  product.description=== undefined ? product.description :  'pas de description'
+                }
+                </div>
             </div>
           </div>
         )}
         <div className="p-title">Similar products</div>
         <div className="listProduct-page">
           {similarProducts.map(similarProduct => (
-         <Link key={similarProduct.id} to={`/product/${similarProduct.id}`} className="item">
+            <Link key={similarProduct.id} to={`/product/${similarProduct.id}`} className="item">
               <img src={`http://localhost:8001/${similarProduct.image}`} alt="" />
               <h2>{similarProduct.name}</h2>
               <div className="price">{similarProduct.price} DH</div>

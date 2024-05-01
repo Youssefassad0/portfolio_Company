@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-// CategoryTable.js
-
-import { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import './addCategory.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -12,36 +8,38 @@ const CategoryTable = () => {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8001/api/listCategory').then(res =>
-            setData(res.data.data));
-           
-    }, [])
-    const deleteCate=(id)=>{
-axios.delete('http://127.0.0.1:8001/api/delete/'+id).then(
-    res=>setMessage(res.data.message))
-    setTimeout(()=>{
-        setMessage('');
-        window.location.reload();
-    },1200)
-    }
+        axios.get('http://127.0.0.1:8001/api/listCategory')
+            .then(res => setData(res.data.data))
+            .catch(error => console.error('Error fetching category data:', error));
+    }, []);
 
+    const deleteCategory = (id) => {
+        if (window.confirm('Are you sure you want to delete this category?')) {
+            axios.delete(`http://127.0.0.1:8001/api/delete/${id}`)
+                .then(res => {
+                    setMessage(res.data.message);
+                    setTimeout(() => {
+                        setMessage('');
+                        window.location.reload();
+                    }, 1200);
+                })
+                .catch(error => console.error('Error deleting category:', error));
+        }
+    };
 
-return (
+    return (
         <div className="category-table">
-             <div className="datatableTitle">
+            <div className="datatableTitle">
                 Add New Category
-            <Link
-              to="/dashboard/categories/new"
-              className="link"
-            >
-              Add New
-            </Link>
-          </div>
-          {message && (
-                    <div className="alert alert-success">
-                        {message}
-                    </div>
-                )}
+                <Link to="/dashboard/categories/new" className="link">
+                    Add New
+                </Link>
+            </div>
+            {message && (
+                <div className="alert alert-success">
+                    {message}
+                </div>
+            )}
             <table>
                 <thead>
                     <tr>
@@ -54,10 +52,12 @@ return (
                         <tr key={category.id}>
                             <td>{category.name}</td>
                             <td>
-                                <button style={{ backgroundColor: "lightgreen"  }}>
-                                   <Link to={`/dashboard/categories/${category.id}`} >Edit</Link>
-                                    </button>
-                                <button style={{ backgroundColor: "red"  }} onClick={()=>deleteCate(category.id)} >Delete</button>
+                                <button className="edit-button">
+                                    <Link to={`/dashboard/categories/${category.id}`}>Edit</Link>
+                                </button>
+                                <button className="delete-button" onClick={() => deleteCategory(category.id)}>
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

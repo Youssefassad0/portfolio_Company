@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './Single.scss';
 import SideBar from '../Components/SideBar/SideBar';
@@ -14,11 +14,13 @@ function Single({ entityType }) {
   const { id } = useParams();
   const [entityData, setEntityData] = useState(null);
   const [transactionData, setTransactionData] = useState([]);
-const [userName,setUserName]=useState('');
-  const urlImg = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+  const [userName, setUserName] = useState('');
+  const [isOk,setIsOk]=useState(true);
+    const urlImg = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
 
   useEffect(() => {
     const fetchData = async () => {
+     
       try {
         let url = '';
 
@@ -26,6 +28,7 @@ const [userName,setUserName]=useState('');
           url = `http://127.0.0.1:8001/api/users/${id}`;
         } else if (entityType === 'employee') {
           url = `http://127.0.0.1:8001/api/employes/${id}`;
+          setIsOk(false)
         } else if (entityType === 'product') {
           url = `http://127.0.0.1:8001/api/products/${id}`;
         }
@@ -121,9 +124,12 @@ const [userName,setUserName]=useState('');
             <Chart aspect={3 / 1} title="Last payments" dataT={filteredTransactions} userName={entityData && entityType === 'user' ? entityData.name : null} />
           </div>
         </div>
-        <div className="user-bottom">
-          <TransactionUser userName={entityData && entityType === 'user' ? entityData.name : null} />
-        </div>
+        {
+          isOk && (
+          <div className="user-bottom">
+            <TransactionUser userName={entityData && entityType === 'user' ? entityData.name : null} />
+          </div>)
+        }
       </div>
     </div>
   );
