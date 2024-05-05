@@ -14,7 +14,7 @@
 }
 
 .h1S {
-    color: red;
+    position: relative;
     background-color: black;
     font-size: 5rem;
     -webkit-text-stroke-width: 2px;
@@ -23,10 +23,9 @@
     background: linear-gradient(8deg, rgba(8, 52, 83, 1) 0%, rgba(0, 230, 173, 1) 41%, rgba(41, 17, 45, 1) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    position: relative;
 }
 
-.h1S:after {
+.h1S::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -45,7 +44,7 @@
     width: 8px;
     border-radius: 50%;
     background-color: #72e2ae;
-    animation: anim 5s linear infinite;
+    animation: anim 2s linear infinite;
 }
 
 @keyframes anim {

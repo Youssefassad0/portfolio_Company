@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import './NavBar.scss'
 import LightModeIcon from '@mui/icons-material/LightMode';
 import { useContext } from "react";
-import { IoMdNotifications } from "react-icons/io";
 import { DarkModeContext } from "../../../Context/darkModeContext";
+import { FaMessage } from "react-icons/fa6";
 function NavBar({ userInfo }) {
   const { dispatch } = useContext(DarkModeContext);
   const { darkMode } = useContext(DarkModeContext);
@@ -29,7 +29,7 @@ function NavBar({ userInfo }) {
           </div>
           <div className="d-item" >
             <Link to="/dashboard/messages" >
-            <IoMdNotifications/>
+            <FaMessage/>
             </Link>
           </div>
           <div className="d-item">

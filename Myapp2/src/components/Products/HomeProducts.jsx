@@ -48,10 +48,9 @@ function HomeProducts() {
                         <div className="category-filter">
                             <label htmlFor="category">Filter by Category:</label>
                             <select id="category"  onChange={handleCategoryChange}>
-                                <option value="">All Categories</option>
-                                {/* Assuming categories is an array of all unique categories */}
+                                <option value=""  >All Categories</option>
                                 {categories.map(category => (
-                                    <option key={category.name} value={category.name}>{category.name}</option>
+                                    <option className="option" key={category.name} value={category.name}>{category.name}</option>
                                 ))}
                             </select>
                         </div>
