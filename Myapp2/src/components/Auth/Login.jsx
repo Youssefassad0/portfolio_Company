@@ -96,7 +96,7 @@ const Login = () => {
             Log In
           </button>
           <Link to="/register"  >
-            <a className="btn">Sign Up</a>
+            <a className="btn" style={{ color:"black" }} >Sign Up</a>
           </Link>
           </div>
 

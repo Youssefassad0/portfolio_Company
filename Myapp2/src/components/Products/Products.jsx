@@ -24,7 +24,7 @@ function Products() {
 
         // Find similar products by filtering based on category_id
         if (productResponse.data.data && productResponse.data.data.category_id) {
-          const similarProducts = allProducts.filter(p => p.category_id === productResponse.data.data.category_id && p.id !== id);
+          const similarProducts = allProducts.filter(p => p.category_id === productResponse.data.data.category_id && p.id !== parseInt(id));
           setSimilarProducts(similarProducts);
         }
       } catch (error) {
@@ -33,6 +33,7 @@ function Products() {
     }
     fetchData();
   }, [id]);
+
   return (
     <>
       <div className="App">
@@ -43,7 +44,7 @@ function Products() {
         {product && (
           <div className="detail">
             <div className="image">
-              <img src={`http://localhost:8001/${product.image}`} alt="" />
+              <img src={`http://localhost:8001/${product.image}`} alt={product.name} />
             </div>
             <div className="content">
               <h1 className="name">{product.name}</h1>
@@ -55,12 +56,9 @@ function Products() {
                 <button>Check Out</button>
                 <button>Chat Us</button>
               </div>
-          
-                <div className="description">
-                {
-                  product.description=== undefined ? product.description :  'pas de description'
-                }
-                </div>
+              <div className="description">
+                {product.description!= "undefined" ? product.description : 'Pas de description'}
+              </div>
             </div>
           </div>
         )}
@@ -68,7 +66,7 @@ function Products() {
         <div className="listProduct-page">
           {similarProducts.map(similarProduct => (
             <Link key={similarProduct.id} to={`/product/${similarProduct.id}`} className="item">
-              <img src={`http://localhost:8001/${similarProduct.image}`} alt="" />
+              <img src={`http://localhost:8001/${similarProduct.image}`} alt={similarProduct.name} />
               <h2>{similarProduct.name}</h2>
               <div className="price">{similarProduct.price} DH</div>
             </Link>
@@ -76,7 +74,7 @@ function Products() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default Products;

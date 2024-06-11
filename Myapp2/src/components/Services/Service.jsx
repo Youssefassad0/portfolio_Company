@@ -13,22 +13,18 @@ function Service() {
                         <div className="cardsService">
                             <div className="cardService">
                                 <i className="fa-brands fa-chromecast"></i>
-                                <p>
-                                    <h2>Service 1</h2>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae, rem. Doloribus, quibusdam voluptatum adipisci corrupti id cum iure excepturi tenetur incidunt, vero rem. Minima quibusdam ad adipisci distinctio ducimus sed?
-                                </p>
+                                <h2>spécialisée dans la fabrication de produits en acier inoxydable et en fer de haute qualité</h2>
+
                             </div> <div className="cardService">
                                 <i className="fa-brands fa-chromecast"></i>
-                                <p>
-                                    <h2>Service 2</h2>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae, rem. Doloribus, quibusdam voluptatum adipisci corrupti id cum iure excepturi tenetur incidunt, vero rem. Minima quibusdam ad adipisci distinctio ducimus sed?
-                                </p>
+                                <h2> CristalInox propose des services d installation professionnelle pour garantir que tous nos produits sont correctement installés et sécurisés.</h2>
+
                             </div> <div className="cardService">
                                 <i className="fa-brands fa-chromecast"></i>
-                                <p>
-                                    <h2>Service 3</h2>
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae, rem. Doloribus, quibusdam voluptatum adipisci corrupti id cum iure excepturi tenetur incidunt, vero rem. Minima quibusdam ad adipisci distinctio ducimus sed?
-                                </p>
+
+                                <h2> Notre équipe de service clientèle est disponible pour répondre à toutes vos questions et préoccupations</h2>
+
+
                             </div>
                         </div>
                     </div>

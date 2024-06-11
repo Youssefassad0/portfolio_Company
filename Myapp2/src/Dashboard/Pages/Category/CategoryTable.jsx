@@ -52,10 +52,10 @@ const CategoryTable = () => {
                         <tr key={category.id}>
                             <td>{category.name}</td>
                             <td>
-                                <button className="edit-button">
+                                <button className="edit-button"  style={{ background:'green' }} >
                                     <Link to={`/dashboard/categories/${category.id}`}>Edit</Link>
                                 </button>
-                                <button className="delete-button" onClick={() => deleteCategory(category.id)}>
+                                <button className="delete-button"  style={{ background:'red' }}  onClick={() => deleteCategory(category.id)}>
                                     Delete
                                 </button>
                             </td>
