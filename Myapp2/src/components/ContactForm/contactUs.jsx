@@ -1,20 +1,20 @@
+/* eslint-disable no-unused-vars */
 import { useState, useCallback } from 'react';
 import Header from '../Header/Header';
 import './contactUs.css';
 import axios from 'axios';
-
+import { Toaster, toast } from 'sonner'
 function Contact() {
   const [email, setEmail] = useState('');
   const [telephone, setTelephone] = useState('');
   const [message, setMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [errors, setErrors] = useState({});
 
   const sendMessage = useCallback(async () => {
     try {
       const response = await axios.post('http://127.0.0.1:8001/api/sendMessage', { email, telephone, message });
-      setSuccessMessage(response.data.message);
+      toast.success('Sent With Success !')
       setEmail('');
       setTelephone('');
       setMessage('');
@@ -53,17 +53,7 @@ function Contact() {
         <Header />
       </div>
       <div className="cardForm">
-        {successMessage && (
-          <div className="success">
-            <div className="success__icon">
-            
-            </div>
-            <div className="success__title">{successMessage}</div>
-            <div className="success__close">
-        
-            </div>
-          </div>
-        )}
+      <Toaster position="top-center" />
         {errorMessage && <div className="error">{errorMessage}</div>}
         <p className="heading">Contact US Now </p>
         <div className="input-div">
